@@ -232,3 +232,52 @@ function initSec05Typewriter() {
 
   observer.observe(frase);
 }
+/* ====================================================================
+   SECCIÓN 03 — LOS TRES PILARES (carrusel)
+   Una tarjeta queda "activa" (expandida) por vez. Las flechas prev/next
+   rotan el índice activo en loop; los dots reflejan cuál está activa.
+   ==================================================================== */
+
+function initSec03Carousel() {
+  const track = document.querySelector('[data-sec03-track]');
+  if (!track) return;
+
+  const cards = Array.from(track.querySelectorAll('[data-sec03-card]'));
+  const dots = Array.from(document.querySelectorAll('[data-sec03-dot]'));
+  const prevBtn = document.querySelector('[data-sec03-prev]');
+  const nextBtn = document.querySelector('[data-sec03-next]');
+
+  let activeIndex = cards.findIndex((card) => card.classList.contains('is-active'));
+  if (activeIndex === -1) activeIndex = 0;
+
+  function setActive(index) {
+    const total = cards.length;
+    const normalized = ((index % total) + total) % total; // soporta índices negativos
+    activeIndex = normalized;
+
+    cards.forEach((card, i) => {
+      card.classList.toggle('is-active', i === activeIndex);
+    });
+
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('is-active', i === activeIndex);
+    });
+  }
+
+  // tocar una tarjeta colapsada también la activa
+  cards.forEach((card, i) => {
+    card.addEventListener('click', () => {
+      if (i !== activeIndex) setActive(i);
+    });
+  });
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => setActive(activeIndex - 1));
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => setActive(activeIndex + 1));
+  }
+
+  setActive(activeIndex);
+}

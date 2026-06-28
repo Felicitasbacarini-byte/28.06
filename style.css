@@ -1235,3 +1235,130 @@ img {
     display: none; /* en mobile no hay espacio visual para flotar sobre el texto */
   }
 }
+/* ====================================================================
+   SECCIÓN 04 — SPONSORS (marquee infinito)
+   Franja amarilla con logos en negro que se desplazan en loop continuo.
+   El track contiene el set de logos duplicado (x2) y se anima con
+   translateX de 0% a -50%; al llegar a -50% el segundo set queda
+   exactamente donde arrancó el primero, logrando un loop sin costuras.
+   ==================================================================== */
+ 
+.sec04 {
+  position: relative;
+  background: var(--color-yellow);
+  padding: clamp(2.2rem, 4vw, 3.2rem) 0;
+  overflow: hidden;
+}
+ 
+.sec04__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0 var(--container-margin) clamp(1.6rem, 2.6vw, 2.2rem);
+}
+ 
+.sec04__eyebrow-marker {
+  width: 12px;
+  height: 12px;
+  background: var(--color-dark-text);
+  flex-shrink: 0;
+}
+ 
+.sec04__eyebrow span:last-child {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  color: var(--color-dark-text);
+}
+ 
+.sec04 .reveal {
+  transition-duration: 1.2s, 1.2s;
+  transform: translateY(24px);
+}
+ 
+.sec04__eyebrow.reveal { transition-delay: 0s; }
+ 
+/* ---- marquee ---- */
+ 
+.sec04__marquee {
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 6%,
+    black 94%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 6%,
+    black 94%,
+    transparent 100%
+  );
+}
+ 
+.sec04__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: sec04-scroll 28s linear infinite;
+}
+ 
+/* el usuario puede pausar el loop pasando el mouse, sin frenar el resto de la página */
+.sec04__marquee:hover .sec04__track {
+  animation-play-state: paused;
+}
+ 
+@keyframes sec04-scroll {
+  from { transform: translateX(0%); }
+  to   { transform: translateX(-50%); }
+}
+ 
+.sec04__item {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 clamp(2.4rem, 5vw, 5.5rem);
+}
+ 
+.sec04__logo {
+  display: block;
+  height: clamp(28px, 3.2vw, 46px);
+  width: auto;
+  object-fit: contain;
+  /* los PNG ya vienen en negro puro; filter queda listo si en algún
+     momento se necesita ajustar el tono sin tocar los assets */
+  filter: brightness(0) saturate(100%);
+}
+ 
+/* ajustes finos de proporción por logo (difieren bastante en aspect-ratio) */
+.sec04__logo--heineken { height: clamp(22px, 2.5vw, 36px); }
+.sec04__logo--santander { height: clamp(24px, 2.7vw, 38px); }
+.sec04__logo--shell { height: clamp(36px, 4vw, 56px); }
+.sec04__logo--visa { height: clamp(22px, 2.4vw, 34px); }
+ 
+/* ====================================================================
+   SECCIÓN 04 — RESPONSIVE
+   ==================================================================== */
+ 
+@media (max-width: 640px) {
+  .sec04 {
+    padding: 1.8rem 0;
+  }
+ 
+  .sec04__eyebrow {
+    margin-bottom: 1.4rem;
+  }
+ 
+  .sec04__item {
+    padding: 0 clamp(1.6rem, 7vw, 2.6rem);
+  }
+ 
+  .sec04__track {
+    animation-duration: 20s;
+  }
+}

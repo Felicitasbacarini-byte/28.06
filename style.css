@@ -1341,7 +1341,8 @@ img {
 .sec05 {
   position: relative;
   background: var(--color-bg);
-  padding: clamp(5rem, 11vw, 9rem) var(--container-margin);
+  min-height: 100vh;
+  padding: clamp(2rem, 6vw, 4rem) var(--container-margin);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1436,9 +1437,10 @@ img {
  
 @media (max-width: 1024px) {
   .sec05 {
-    padding: clamp(4rem, 12vw, 6rem) var(--container-margin);
+    min-height: 100vh;
+    padding: clamp(2rem, 8vw, 3.5rem) var(--container-margin);
   }
- 
+
   .sec05__frase {
     font-size: clamp(1.5rem, 4.5vw, 2.4rem);
   }

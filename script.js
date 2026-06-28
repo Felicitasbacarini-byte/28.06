@@ -95,4 +95,3 @@ function initScrollReveal() {
     heroReveals.forEach((el) => el.classList.add('is-visible'));
   });
 }
- 

@@ -95,7 +95,7 @@ function initScrollReveal() {
     heroReveals.forEach((el) => el.classList.add('is-visible'));
   });
 }
-/* ====================================================================
+ /* ====================================================================
    APEX SIM RACING ACADEMY — script.js
    Sección: Navbar + Hero
    ==================================================================== */

@@ -1163,6 +1163,7 @@ img {
   height: 5.515%;
   background: var(--color-yellow);
   pointer-events: none;
+  z-index: 2;
 }
 
 /* cubo decorativo aislado sobre la columna de texto (esquina sup. izq. de la sección) */

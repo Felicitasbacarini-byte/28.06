@@ -245,3 +245,65 @@ function initCounters() {
  
   counters.forEach((el) => observer.observe(el));
 }
+/* ====================================================================
+   SECCIÓN 05 — FRASE (efecto letra por letra)
+   Cada carácter de la frase se envuelve en un span individual con
+   un transition-delay creciente. La clase "is-visible" en el
+   contenedor dispara la revelación de todos los spans en cascada.
+   A diferencia de los demás reveals del sitio, ESTE se repite cada
+   vez que la sección entra o sale del viewport (no usa unobserve).
+   ==================================================================== */
+ 
+function initSec05Typewriter() {
+  const frase = document.querySelector('[data-typewriter]');
+  if (!frase) return;
+ 
+  const DELAY_STEP = 18; // ms entre letra y letra
+ 
+  // Envuelve cada carácter de texto en un span.sec05__char,
+  // preservando los <span class="sec05__highlight"> ya presentes.
+  function wrapChars(node) {
+    let charIndex = 0;
+ 
+    function walk(node) {
+      Array.from(node.childNodes).forEach((child) => {
+        if (child.nodeType === Node.TEXT_NODE) {
+          const fragment = document.createDocumentFragment();
+          child.textContent.split('').forEach((ch) => {
+            const span = document.createElement('span');
+            span.className = 'sec05__char';
+            span.textContent = ch;
+            span.style.transitionDelay = `${charIndex * DELAY_STEP}ms`;
+            charIndex += 1;
+            fragment.appendChild(span);
+          });
+          child.replaceWith(fragment);
+        } else if (child.nodeType === Node.ELEMENT_NODE) {
+          // elementos como .sec05__highlight: se procesan recursivamente
+          // para que sus letras también queden individualizadas, pero
+          // siguen contando dentro de la misma secuencia de delays.
+          walk(child);
+        }
+      });
+    }
+ 
+    walk(node);
+  }
+ 
+  wrapChars(frase);
+ 
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        } else {
+          entry.target.classList.remove('is-visible');
+        }
+      });
+    },
+    { threshold: 0.3 }
+  );
+ 
+  observer.observe(frase);
+}

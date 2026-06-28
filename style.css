@@ -1329,3 +1329,129 @@ img {
     animation-duration: 20s;
   }
 }
+/* ====================================================================
+   SECCIÓN 05 — FRASE
+   Frase central grande, texto base en Inter, highlights en Victor
+   Mono color amarillo. Las letras se revelan una por una mediante
+   spans inyectados por JS (ver initSec05Typewriter en script.js),
+   y la animación se repite cada vez que la sección entra/sale del
+   viewport (no es "una sola vez").
+   ==================================================================== */
+ 
+.sec05 {
+  position: relative;
+  background: var(--color-bg);
+  padding: clamp(5rem, 11vw, 9rem) var(--container-margin);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+ 
+.sec05__frase {
+  max-width: 1400px;
+  text-align: center;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: clamp(1.8rem, 3.6vw, 3.4rem);
+  line-height: 1.25;
+  color: var(--color-white);
+  letter-spacing: 0.01em;
+}
+ 
+.sec05__highlight {
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--color-yellow);
+}
+ 
+/* ---- letras individuales (inyectadas por JS) ---- */
+ 
+.sec05__char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.35em);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+ 
+.sec05__frase.is-visible .sec05__char {
+  opacity: 1;
+  transform: translateY(0);
+}
+ 
+/* ---- pixel blocks decorativos ---- */
+ 
+.sec05__deco {
+  position: absolute;
+  display: grid;
+  pointer-events: none;
+}
+ 
+.sec05__deco span {
+  background: var(--color-yellow);
+  width: clamp(20px, 2.2vw, 40px);
+  height: clamp(20px, 2.2vw, 40px);
+}
+ 
+/* patrón tipo "escalera" arriba a la izquierda */
+.sec05__deco--top-left {
+  top: 0;
+  left: 0;
+  grid-template-columns: repeat(2, clamp(20px, 2.2vw, 40px));
+  grid-template-rows: repeat(2, clamp(20px, 2.2vw, 40px));
+}
+.sec05__deco--top-left span:nth-child(1) { grid-column: 1; grid-row: 1; }
+.sec05__deco--top-left span:nth-child(2) { grid-column: 2; grid-row: 1; opacity: 0; }
+.sec05__deco--top-left span:nth-child(3) { grid-column: 1; grid-row: 2; opacity: 0; }
+.sec05__deco--top-left span:nth-child(4) { grid-column: 2; grid-row: 2; }
+ 
+/* patrón tipo tablero arriba a la derecha */
+.sec05__deco--top-right {
+  top: 0;
+  right: 0;
+  grid-template-columns: repeat(3, clamp(20px, 2.2vw, 40px));
+  grid-template-rows: repeat(2, clamp(20px, 2.2vw, 40px));
+}
+.sec05__deco--top-right span:nth-child(1) { grid-column: 1; grid-row: 1; }
+.sec05__deco--top-right span:nth-child(2) { grid-column: 2; grid-row: 1; opacity: 0; }
+.sec05__deco--top-right span:nth-child(3) { grid-column: 3; grid-row: 1; }
+.sec05__deco--top-right span:nth-child(4) { grid-column: 1; grid-row: 2; opacity: 0; }
+.sec05__deco--top-right span:nth-child(5) { grid-column: 2; grid-row: 2; }
+.sec05__deco--top-right span:nth-child(6) { grid-column: 3; grid-row: 2; opacity: 0; }
+ 
+/* patrón diagonal abajo a la izquierda */
+.sec05__deco--bottom-left {
+  bottom: 0;
+  left: 0;
+  grid-template-columns: repeat(2, clamp(20px, 2.2vw, 40px));
+  grid-template-rows: repeat(3, clamp(20px, 2.2vw, 40px));
+}
+.sec05__deco--bottom-left span:nth-child(1) { grid-column: 1; grid-row: 1; }
+.sec05__deco--bottom-left span:nth-child(2) { grid-column: 2; grid-row: 2; }
+.sec05__deco--bottom-left span:nth-child(3) { grid-column: 1; grid-row: 3; }
+ 
+/* ====================================================================
+   SECCIÓN 05 — RESPONSIVE
+   ==================================================================== */
+ 
+@media (max-width: 1024px) {
+  .sec05 {
+    padding: clamp(4rem, 12vw, 6rem) var(--container-margin);
+  }
+ 
+  .sec05__frase {
+    font-size: clamp(1.5rem, 4.5vw, 2.4rem);
+  }
+}
+ 
+@media (max-width: 640px) {
+  .sec05__deco span {
+    width: clamp(14px, 5vw, 24px);
+    height: clamp(14px, 5vw, 24px);
+  }
+ 
+  .sec05__frase {
+    font-size: clamp(1.3rem, 6vw, 1.8rem);
+    line-height: 1.35;
+  }
+}

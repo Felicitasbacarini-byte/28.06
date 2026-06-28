@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollReveal();
   initCounters();
   initSec05Typewriter();
+  initSec03Carousel();
 });
 
 /* ====================================================================

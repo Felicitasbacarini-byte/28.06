@@ -1370,9 +1370,15 @@ img {
  
 .sec05__char {
   display: inline-block;
+  white-space: pre;
   opacity: 0;
   transform: translateY(0.35em);
   transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.sec05__word {
+  display: inline-block;
+  white-space: nowrap;
 }
  
 .sec05__frase.is-visible .sec05__char {

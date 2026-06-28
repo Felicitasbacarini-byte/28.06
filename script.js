@@ -164,23 +164,44 @@ function initSec05Typewriter() {
 
   const DELAY_STEP = 18; // ms entre letra y letra
 
-  // Envuelve cada carácter de texto en un span.sec05__char,
-  // preservando los <span class="sec05__highlight"> ya presentes.
+  // Envuelve cada carácter de texto en un span.sec05__char, agrupando
+  // las letras de cada palabra dentro de un span.sec05__word (con
+  // white-space: nowrap) para que el navegador nunca corte la línea
+  // en medio de una palabra. Los espacios quedan como chars sueltos
+  // entre palabras, que es donde sí puede saltar de línea.
+  // Preserva los <span class="sec05__highlight"> ya presentes.
   function wrapChars(node) {
     let charIndex = 0;
+
+    function makeChar(ch) {
+      const span = document.createElement('span');
+      span.className = 'sec05__char';
+      span.textContent = ch;
+      span.style.transitionDelay = `${charIndex * DELAY_STEP}ms`;
+      charIndex += 1;
+      return span;
+    }
 
     function walk(node) {
       Array.from(node.childNodes).forEach((child) => {
         if (child.nodeType === Node.TEXT_NODE) {
           const fragment = document.createDocumentFragment();
-          child.textContent.split('').forEach((ch) => {
-            const span = document.createElement('span');
-            span.className = 'sec05__char';
-            span.textContent = ch;
-            span.style.transitionDelay = `${charIndex * DELAY_STEP}ms`;
-            charIndex += 1;
-            fragment.appendChild(span);
+          // separa el texto en palabras y espacios, conservando ambos
+          const tokens = child.textContent.split(/( +)/).filter((t) => t.length);
+
+          tokens.forEach((token) => {
+            if (token.trim() === '') {
+              // espacio(s): un char suelto por cada uno
+              token.split('').forEach((ch) => fragment.appendChild(makeChar(ch)));
+            } else {
+              // palabra: agrupada en un span que no se puede cortar
+              const wordSpan = document.createElement('span');
+              wordSpan.className = 'sec05__word';
+              token.split('').forEach((ch) => wordSpan.appendChild(makeChar(ch)));
+              fragment.appendChild(wordSpan);
+            }
           });
+
           child.replaceWith(fragment);
         } else if (child.nodeType === Node.ELEMENT_NODE) {
           // elementos como .sec05__highlight: se procesan recursivamente

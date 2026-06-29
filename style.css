@@ -1907,7 +1907,8 @@ img {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  clip-path: inset(100%);
+  transition: opacity 0.3s ease, clip-path 0.3s ease;
 }
 
 /* ---- zonas de hover (regiones invisibles, grandes) ---- */
@@ -1922,31 +1923,31 @@ img {
 }
 
 .sec07__zone--screen {
-  left: 29%;
-  top: 8%;
+  left: 32%;
+  top: 22%;
   width: 36%;
-  height: 34%;
+  height: 26%;
 }
 
 .sec07__zone--knobs {
-  left: 26%;
-  top: 44%;
+  left: 27%;
+  top: 50%;
   width: 41%;
-  height: 24%;
+  height: 20%;
 }
 
 .sec07__zone--left {
-  left: 0%;
-  top: 5%;
+  left: 2%;
+  top: 14%;
   width: 27%;
-  height: 65%;
+  height: 56%;
 }
 
 .sec07__zone--right {
-  left: 65%;
-  top: 5%;
+  left: 68%;
+  top: 14%;
   width: 27%;
-  height: 65%;
+  height: 56%;
 }
 
 /* clip-path de cada zona aplicado a la capa glow completa.
@@ -1958,25 +1959,25 @@ img {
 .sec07__wheel-wrap:has(.sec07__zone--screen:hover) .sec07__wheel-img--glow,
 .sec07__wheel-wrap:has(.sec07__zone--screen:focus-visible) .sec07__wheel-img--glow {
   opacity: 1;
-  clip-path: inset(8% 35% 58% 29%);
+  clip-path: inset(22% 32% 52% 32%);
 }
 
 .sec07__wheel-wrap:has(.sec07__zone--knobs:hover) .sec07__wheel-img--glow,
 .sec07__wheel-wrap:has(.sec07__zone--knobs:focus-visible) .sec07__wheel-img--glow {
   opacity: 1;
-  clip-path: inset(44% 33% 32% 26%);
+  clip-path: inset(50% 32% 30% 27%);
 }
 
 .sec07__wheel-wrap:has(.sec07__zone--left:hover) .sec07__wheel-img--glow,
 .sec07__wheel-wrap:has(.sec07__zone--left:focus-visible) .sec07__wheel-img--glow {
   opacity: 1;
-  clip-path: inset(5% 73% 30% 0%);
+  clip-path: inset(14% 71% 30% 2%);
 }
 
 .sec07__wheel-wrap:has(.sec07__zone--right:hover) .sec07__wheel-img--glow,
 .sec07__wheel-wrap:has(.sec07__zone--right:focus-visible) .sec07__wheel-img--glow {
   opacity: 1;
-  clip-path: inset(5% 8% 30% 65%);
+  clip-path: inset(14% 5% 30% 68%);
 }
 
 /* ---- callouts (texto explicativo que se despliega) ---- */

@@ -393,5 +393,23 @@ function initSec07Wheel() {
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onResize);
 
+  // font-display: swap (usado para Victor Mono embebida en base64) puede
+  // re-flowear el texto DESPUÉS del load inicial, cuando la fuente real
+  // termina de descargar/parsear — eso cambia la altura de las secciones
+  // anteriores y deja "vieja" la medición de measure(). Re-medimos apenas
+  // las fuentes están listas, y de nuevo tras un pequeño margen extra por
+  // si hay un reflow de último momento (imágenes grandes, layout shift).
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      measure();
+      update();
+    });
+  }
+  window.addEventListener('load', () => {
+    measure();
+    update();
+    setTimeout(() => { measure(); update(); }, 300);
+  });
+
   update();
 }

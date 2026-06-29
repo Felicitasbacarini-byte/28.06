@@ -1767,12 +1767,13 @@ img {
 }
 /* ====================================================================
    SECCIÓN 07 — TECNOLOGÍA DE ÉLITE
-   Header (eyebrow + título + copy) a la izquierda, volante a la
-   derecha. El volante tiene una capa base en negro y una capa
-   "glow" idéntica en amarillo, recortada en 4 regiones (clip-path)
-   que se revelan al hacer hover sobre su zona invisible asociada.
-   El conjunto del volante se mueve y crece levemente con el scroll
-   (parallax sutil, ver initSec07Wheel en script.js).
+   El volante arranca chico, a la derecha del texto (como parte del
+   header). A medida que se hace scroll dentro de ".sec07__wheel-stage"
+   (una zona alta que da "recorrido"), el volante se traslada hacia el
+   centro de la pantalla y crece — sin pin/sticky, scroll 100% libre.
+   Una vez en su posición final, quedan activas las 4 zonas de hover
+   (clip-path + callout) sobre los controles reales del volante.
+   Ver initSec07Wheel en script.js.
    ==================================================================== */
 
 .sec07 {
@@ -1780,17 +1781,22 @@ img {
   width: 100%;
   background: var(--color-bg);
   overflow: hidden;
-  padding: calc(var(--navbar-height) + 6vw) var(--container-margin) 8vw;
+}
+
+/* ---- header (texto + volante chico inicial) ---- */
+
+.sec07__header {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
-  gap: clamp(2.4rem, 5vw, 4rem);
+  gap: clamp(2rem, 4vw, 3.4rem);
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: calc(var(--navbar-height) + 6vw) var(--container-margin) 2vw;
 }
 
-/* ---- header (texto) ---- */
-
-.sec07__header {
+.sec07__text {
   flex: 1 1 420px;
   max-width: 560px;
 }
@@ -1845,24 +1851,48 @@ img {
   font-weight: 600;
 }
 
-/* ---- volante: stage + parallax ---- */
-
-.sec07__wheel-stage {
-  flex: 1 1 420px;
-  max-width: 720px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* alto generoso para que haya margen de scroll donde aplicar el parallax */
-  min-height: clamp(420px, 48vw, 640px);
+/* placeholder chico que ancla el punto de partida del volante,
+   alineado al texto antes de que arranque el viaje hacia el centro.
+   Muestra el volante "en reposo" (flujo normal del documento); el
+   JS oculta esta imagen y revela el wrap fixed apenas el viaje arranca,
+   para no duplicar visualmente el volante. */
+.sec07__wheel-slot {
+  flex: 1 1 360px;
+  max-width: 460px;
+  align-self: center;
 }
 
-.sec07__wheel-wrap {
+.sec07__wheel-slot-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  pointer-events: none;
+  transition: opacity 0.15s linear;
+}
+
+/* ---- stage: zona alta que da "recorrido" de scroll ---- */
+
+.sec07__wheel-stage {
   position: relative;
   width: 100%;
-  max-width: 620px;
-  will-change: transform;
-  transition: transform 0.1s linear;
+  height: 140vh;
+}
+
+/* el wrap se posiciona con JS (top/left/width en px) calculado en
+   cada frame de scroll según el progreso del viaje. Arranca oculto
+   (opacity controlada por JS) hasta que el slot real empieza a
+   salir de pantalla, momento en que toma el relevo visual. */
+.sec07__wheel-wrap {
+  position: fixed;
+  opacity: 0;
+  transition: opacity 0.15s linear;
+  will-change: transform, width, opacity;
+  pointer-events: none;
+}
+
+.sec07__wheel-wrap.is-interactive {
+  pointer-events: auto;
 }
 
 .sec07__wheel-img {
@@ -1892,58 +1922,61 @@ img {
 }
 
 .sec07__zone--screen {
-  left: 30%;
-  top: 24%;
-  width: 34%;
-  height: 25%;
+  left: 29%;
+  top: 8%;
+  width: 36%;
+  height: 34%;
 }
 
 .sec07__zone--knobs {
-  left: 28%;
-  top: 51%;
-  width: 38%;
-  height: 19%;
+  left: 26%;
+  top: 44%;
+  width: 41%;
+  height: 24%;
 }
 
 .sec07__zone--left {
-  left: 3%;
-  top: 24%;
-  width: 25%;
-  height: 46%;
+  left: 0%;
+  top: 5%;
+  width: 27%;
+  height: 65%;
 }
 
 .sec07__zone--right {
-  left: 66%;
-  top: 24%;
-  width: 25%;
-  height: 46%;
+  left: 65%;
+  top: 5%;
+  width: 27%;
+  height: 65%;
 }
 
 /* clip-path de cada zona aplicado a la capa glow completa.
    Se usa :has() en el contenedor (en vez del combinador ~) porque
-   no depende del orden del DOM entre las zonas y la capa glow. */
+   no depende del orden del DOM entre las zonas y la capa glow.
+   Coordenadas medidas sobre las imágenes ya unificadas al mismo
+   bounding box (VOLANTE y VOLANTE_DUO tenían canvas de distinto
+   tamaño/aspect-ratio originalmente — eso causaba el desfasaje). */
 .sec07__wheel-wrap:has(.sec07__zone--screen:hover) .sec07__wheel-img--glow,
 .sec07__wheel-wrap:has(.sec07__zone--screen:focus-visible) .sec07__wheel-img--glow {
   opacity: 1;
-  clip-path: inset(24% 36% 51% 30%);
+  clip-path: inset(8% 35% 58% 29%);
 }
 
 .sec07__wheel-wrap:has(.sec07__zone--knobs:hover) .sec07__wheel-img--glow,
 .sec07__wheel-wrap:has(.sec07__zone--knobs:focus-visible) .sec07__wheel-img--glow {
   opacity: 1;
-  clip-path: inset(51% 34% 30% 28%);
+  clip-path: inset(44% 33% 32% 26%);
 }
 
 .sec07__wheel-wrap:has(.sec07__zone--left:hover) .sec07__wheel-img--glow,
 .sec07__wheel-wrap:has(.sec07__zone--left:focus-visible) .sec07__wheel-img--glow {
   opacity: 1;
-  clip-path: inset(24% 72% 30% 3%);
+  clip-path: inset(5% 73% 30% 0%);
 }
 
 .sec07__wheel-wrap:has(.sec07__zone--right:hover) .sec07__wheel-img--glow,
 .sec07__wheel-wrap:has(.sec07__zone--right:focus-visible) .sec07__wheel-img--glow {
   opacity: 1;
-  clip-path: inset(24% 9% 30% 66%);
+  clip-path: inset(5% 8% 30% 65%);
 }
 
 /* ---- callouts (texto explicativo que se despliega) ---- */
@@ -1953,7 +1986,7 @@ img {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  width: clamp(180px, 18vw, 240px);
+  width: clamp(170px, 16vw, 220px);
   padding: 0.8rem 0.95rem;
   background: rgba(10, 10, 10, 0.92);
   border: 1px solid var(--color-yellow);

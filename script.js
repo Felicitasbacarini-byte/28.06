@@ -283,40 +283,95 @@ function initSec03Carousel() {
   setActive(activeIndex);
 }
 /* ====================================================================
-   SECCIÓN 07 — TECNOLOGÍA (parallax sutil del volante)
-   A medida que la sección recorre el viewport, el volante se desplaza
-   levemente en Y y escala un poco hacia arriba — un parallax suave,
-   sin quedar "pineado" en pantalla. El cálculo usa la posición de la
-   sección relativa al viewport en cada scroll/resize, vía
-   requestAnimationFrame para no saturar el hilo principal.
+   SECCIÓN 07 — TECNOLOGÍA (viaje del volante hacia el centro)
+   El volante arranca con el tamaño/posición de ".sec07__wheel-slot"
+   (chico, al lado del texto, dentro del flujo normal del documento).
+   A medida que ese slot se acerca y empieza a salir del viewport por
+   arriba (scrolleando hacia abajo), el volante "fixed" toma el relevo
+   visual: se interpola desde la posición que el slot tenía en ese
+   instante hacia el centro de la pantalla, agrandándose. Es scroll
+   100% libre (sin pin/sticky): el progreso se deriva directamente de
+   cuánto se desplazó el slot respecto a su posición de reposo.
    ==================================================================== */
 
 function initSec07Wheel() {
-  const stage = document.querySelector('[data-sec07-stage]');
-  const wheel = document.querySelector('[data-sec07-wheel]');
-  if (!stage || !wheel) return;
+  const wrap = document.querySelector('[data-sec07-wheel]');
+  const slot = document.querySelector('[data-sec07-slot]');
+  if (!wrap || !slot) return;
 
-  const MAX_TRANSLATE = 36; // px de desplazamiento vertical total
-  const MAX_SCALE_DELTA = 0.06; // de 1.0 a 1.06
+  const ASPECT_RATIO = 805 / 463;
+
+  // cuántos px de scroll hace falta recorrer (desde que el slot
+  // empieza a salir por arriba) para completar el viaje al 100%
+  const TRAVEL_DISTANCE = 700;
 
   let ticking = false;
 
+  // posición/tamaño de reposo del slot en coordenadas de DOCUMENTO,
+  // medidos una sola vez (load/resize), nunca durante el scroll.
+  let slotDocTop = 0;
+  let slotDocLeft = 0;
+  let slotWidth = 0;
+
+  function measure() {
+    const r = slot.getBoundingClientRect();
+    slotDocTop = r.top + window.scrollY;
+    slotDocLeft = r.left + window.scrollX;
+    slotWidth = r.width;
+  }
+
+  function easeInOutCubic(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+
   function update() {
-    const rect = stage.getBoundingClientRect();
     const vh = window.innerHeight;
+    const vw = window.innerWidth;
 
-    // progreso 0→1 a medida que la sección atraviesa el viewport:
-    // 0 = el stage recién entra por abajo, 1 = el stage ya salió por arriba
-    const total = rect.height + vh;
-    const traveled = vh - rect.top;
-    const progress = Math.min(Math.max(traveled / total, 0), 1);
+    // posición del slot relativa al viewport EN ESTE INSTANTE —válido
+    // usar el scroll actual aquí porque es solo para saber cuánto ya
+    // se "comió" el scroll respecto al reposo, no como posición final.
+    const slotViewportTop = slotDocTop - window.scrollY;
 
-    // centramos el efecto: empuja hacia arriba y agranda un poco
-    // a medida que se acerca al centro del recorrido
-    const translateY = (progress - 0.5) * -2 * MAX_TRANSLATE;
-    const scale = 1 + Math.sin(progress * Math.PI) * MAX_SCALE_DELTA;
+    // el viaje arranca cuando el slot está a punto de tocar el techo
+    // del viewport (slotViewportTop llega a ~0) y avanza durante
+    // TRAVEL_DISTANCE px de scroll adicional.
+    const progressRaw = -slotViewportTop / TRAVEL_DISTANCE;
+    const progress = Math.min(Math.max(progressRaw, 0), 1);
+    const eased = easeInOutCubic(progress);
 
-    wheel.style.transform = `translateY(${translateY.toFixed(2)}px) scale(${scale.toFixed(4)})`;
+    // estado inicial fijo: tal como estaba el slot en el instante en
+    // que progress=0 (es decir, slotViewportTop≈0) — su X no cambia
+    // con el scroll (solo Y se mueve verticalmente con el documento),
+    // así que slotDocLeft - scrollX da directamente su X en viewport.
+    const startWidth = slotWidth;
+    const startLeft = slotDocLeft - window.scrollX;
+    const startTop = 0; // por definición, el viaje arranca cuando el slot toca y=0
+
+    // estado final: centrado en pantalla, más grande
+    const endWidth = Math.min(vw * 0.42, 620);
+    const endHeight = endWidth / ASPECT_RATIO;
+    const endLeft = (vw - endWidth) / 2;
+    const endTop = Math.max((vh - endHeight) / 2, vh * 0.14);
+
+    const currentWidth = startWidth + (endWidth - startWidth) * eased;
+    const currentLeft = startLeft + (endLeft - startLeft) * eased;
+    const currentTop = startTop + (endTop - startTop) * eased;
+
+    wrap.style.width = `${currentWidth}px`;
+    wrap.style.left = `${currentLeft}px`;
+    wrap.style.top = `${currentTop}px`;
+
+    // cross-fade simple: apenas progress > 0 (el slot real empezó a
+    // salir de pantalla), el wrap fixed se hace visible y el slot
+    // real se oculta, evitando un duplicado visual del volante.
+    const showFixed = progress > 0.001;
+    wrap.style.opacity = showFixed ? '1' : '0';
+    slot.style.opacity = showFixed ? '0' : '1';
+
+    // las zonas de hover solo responden una vez que el volante llegó
+    // (o casi) a su tamaño final
+    wrap.classList.toggle('is-interactive', progress > 0.92);
 
     ticking = false;
   }
@@ -328,8 +383,14 @@ function initSec07Wheel() {
     }
   }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
+  function onResize() {
+    measure();
+    onScroll();
+  }
 
-  update(); // estado inicial
+  measure();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onResize);
+
+  update();
 }

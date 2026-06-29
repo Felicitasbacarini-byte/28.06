@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCounters();
   initSec05Typewriter();
   initSec03Carousel();
+  initSec07Wheel();
 });
 
 /* ====================================================================

@@ -282,3 +282,54 @@ function initSec03Carousel() {
 
   setActive(activeIndex);
 }
+/* ====================================================================
+   SECCIÓN 07 — TECNOLOGÍA (parallax sutil del volante)
+   A medida que la sección recorre el viewport, el volante se desplaza
+   levemente en Y y escala un poco hacia arriba — un parallax suave,
+   sin quedar "pineado" en pantalla. El cálculo usa la posición de la
+   sección relativa al viewport en cada scroll/resize, vía
+   requestAnimationFrame para no saturar el hilo principal.
+   ==================================================================== */
+
+function initSec07Wheel() {
+  const stage = document.querySelector('[data-sec07-stage]');
+  const wheel = document.querySelector('[data-sec07-wheel]');
+  if (!stage || !wheel) return;
+
+  const MAX_TRANSLATE = 36; // px de desplazamiento vertical total
+  const MAX_SCALE_DELTA = 0.06; // de 1.0 a 1.06
+
+  let ticking = false;
+
+  function update() {
+    const rect = stage.getBoundingClientRect();
+    const vh = window.innerHeight;
+
+    // progreso 0→1 a medida que la sección atraviesa el viewport:
+    // 0 = el stage recién entra por abajo, 1 = el stage ya salió por arriba
+    const total = rect.height + vh;
+    const traveled = vh - rect.top;
+    const progress = Math.min(Math.max(traveled / total, 0), 1);
+
+    // centramos el efecto: empuja hacia arriba y agranda un poco
+    // a medida que se acerca al centro del recorrido
+    const translateY = (progress - 0.5) * -2 * MAX_TRANSLATE;
+    const scale = 1 + Math.sin(progress * Math.PI) * MAX_SCALE_DELTA;
+
+    wheel.style.transform = `translateY(${translateY.toFixed(2)}px) scale(${scale.toFixed(4)})`;
+
+    ticking = false;
+  }
+
+  function onScroll() {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+
+  update(); // estado inicial
+}

@@ -1765,3 +1765,341 @@ img {
     white-space: normal;
   }
 }
+/* ====================================================================
+   SECCIÓN 07 — TECNOLOGÍA DE ÉLITE
+   Header (eyebrow + título + copy) a la izquierda, volante a la
+   derecha. El volante tiene una capa base en negro y una capa
+   "glow" idéntica en amarillo, recortada en 4 regiones (clip-path)
+   que se revelan al hacer hover sobre su zona invisible asociada.
+   El conjunto del volante se mueve y crece levemente con el scroll
+   (parallax sutil, ver initSec07Wheel en script.js).
+   ==================================================================== */
+
+.sec07 {
+  position: relative;
+  width: 100%;
+  background: var(--color-bg);
+  overflow: hidden;
+  padding: calc(var(--navbar-height) + 6vw) var(--container-margin) 8vw;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: clamp(2.4rem, 5vw, 4rem);
+}
+
+/* ---- header (texto) ---- */
+
+.sec07__header {
+  flex: 1 1 420px;
+  max-width: 560px;
+}
+
+.sec07__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: clamp(1.6rem, 2.8vw, 2.2rem);
+}
+
+.sec07__eyebrow-marker {
+  width: 12px;
+  height: 12px;
+  background: var(--color-yellow);
+  flex-shrink: 0;
+}
+
+.sec07__eyebrow span:last-child {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  color: var(--color-yellow);
+}
+
+.sec07__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-white);
+  font-size: clamp(1.9rem, 2.8vw, 2.8rem);
+  line-height: 1.08;
+  letter-spacing: 0.01em;
+  margin-bottom: clamp(1.6rem, 2.8vw, 2.4rem);
+}
+
+.sec07__title span {
+  display: block;
+}
+
+.sec07__copy p {
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 1.05vw, 1.05rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 1.2rem;
+}
+
+.sec07__copy strong {
+  color: var(--color-yellow);
+  font-weight: 600;
+}
+
+/* ---- volante: stage + parallax ---- */
+
+.sec07__wheel-stage {
+  flex: 1 1 420px;
+  max-width: 720px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* alto generoso para que haya margen de scroll donde aplicar el parallax */
+  min-height: clamp(420px, 48vw, 640px);
+}
+
+.sec07__wheel-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+.sec07__wheel-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  pointer-events: none;
+}
+
+.sec07__wheel-img--glow {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* ---- zonas de hover (regiones invisibles, grandes) ---- */
+
+.sec07__zone {
+  position: absolute;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sec07__zone--screen {
+  left: 30%;
+  top: 24%;
+  width: 34%;
+  height: 25%;
+}
+
+.sec07__zone--knobs {
+  left: 28%;
+  top: 51%;
+  width: 38%;
+  height: 19%;
+}
+
+.sec07__zone--left {
+  left: 3%;
+  top: 24%;
+  width: 25%;
+  height: 46%;
+}
+
+.sec07__zone--right {
+  left: 66%;
+  top: 24%;
+  width: 25%;
+  height: 46%;
+}
+
+/* clip-path de cada zona aplicado a la capa glow completa.
+   Se usa :has() en el contenedor (en vez del combinador ~) porque
+   no depende del orden del DOM entre las zonas y la capa glow. */
+.sec07__wheel-wrap:has(.sec07__zone--screen:hover) .sec07__wheel-img--glow,
+.sec07__wheel-wrap:has(.sec07__zone--screen:focus-visible) .sec07__wheel-img--glow {
+  opacity: 1;
+  clip-path: inset(24% 36% 51% 30%);
+}
+
+.sec07__wheel-wrap:has(.sec07__zone--knobs:hover) .sec07__wheel-img--glow,
+.sec07__wheel-wrap:has(.sec07__zone--knobs:focus-visible) .sec07__wheel-img--glow {
+  opacity: 1;
+  clip-path: inset(51% 34% 30% 28%);
+}
+
+.sec07__wheel-wrap:has(.sec07__zone--left:hover) .sec07__wheel-img--glow,
+.sec07__wheel-wrap:has(.sec07__zone--left:focus-visible) .sec07__wheel-img--glow {
+  opacity: 1;
+  clip-path: inset(24% 72% 30% 3%);
+}
+
+.sec07__wheel-wrap:has(.sec07__zone--right:hover) .sec07__wheel-img--glow,
+.sec07__wheel-wrap:has(.sec07__zone--right:focus-visible) .sec07__wheel-img--glow {
+  opacity: 1;
+  clip-path: inset(24% 9% 30% 66%);
+}
+
+/* ---- callouts (texto explicativo que se despliega) ---- */
+
+.sec07__callout {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  width: clamp(180px, 18vw, 240px);
+  padding: 0.8rem 0.95rem;
+  background: rgba(10, 10, 10, 0.92);
+  border: 1px solid var(--color-yellow);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+  text-align: left;
+  z-index: 5;
+}
+
+.sec07__zone:hover .sec07__callout,
+.sec07__zone:focus-visible .sec07__callout {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sec07__callout-tag {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: var(--color-yellow);
+}
+
+.sec07__callout-text {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* posición de cada callout relativa a su zona */
+.sec07__callout--screen {
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 6px);
+  margin-top: 0.8rem;
+}
+.sec07__zone--screen:hover .sec07__callout--screen,
+.sec07__zone--screen:focus-visible .sec07__callout--screen {
+  transform: translate(-50%, 0);
+}
+
+.sec07__callout--knobs {
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 6px);
+  margin-top: 0.8rem;
+}
+.sec07__zone--knobs:hover .sec07__callout--knobs,
+.sec07__zone--knobs:focus-visible .sec07__callout--knobs {
+  transform: translate(-50%, 0);
+}
+
+.sec07__callout--left {
+  top: 50%;
+  right: 100%;
+  transform: translate(-6px, -50%);
+  margin-right: 0.8rem;
+}
+.sec07__zone--left:hover .sec07__callout--left,
+.sec07__zone--left:focus-visible .sec07__callout--left {
+  transform: translate(0, -50%);
+}
+
+.sec07__callout--right {
+  top: 50%;
+  left: 100%;
+  transform: translate(6px, -50%);
+  margin-left: 0.8rem;
+}
+.sec07__zone--right:hover .sec07__callout--right,
+.sec07__zone--right:focus-visible .sec07__callout--right {
+  transform: translate(0, -50%);
+}
+
+/* ---- reveal ---- */
+
+.sec07 .reveal {
+  transition-duration: 1.2s, 1.2s;
+  transform: translateY(28px);
+}
+
+.sec07__eyebrow.reveal { transition-delay: 0s; }
+.sec07__title .reveal:nth-of-type(1) { transition-delay: 0.1s; }
+.sec07__title .reveal:nth-of-type(2) { transition-delay: 0.2s; }
+.sec07__copy .reveal:nth-of-type(1) { transition-delay: 0.3s; }
+.sec07__copy .reveal:nth-of-type(2) { transition-delay: 0.4s; }
+
+/* ====================================================================
+   SECCIÓN 07 — RESPONSIVE
+   ==================================================================== */
+
+@media (max-width: 1024px) {
+  .sec07 {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .sec07__header {
+    max-width: 100%;
+  }
+
+  .sec07__eyebrow {
+    justify-content: center;
+  }
+
+  .sec07__wheel-stage {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .sec07 {
+    padding: calc(var(--navbar-height) + 10vh) var(--container-margin) 14vh;
+  }
+
+  .sec07__wheel-stage {
+    min-height: auto;
+    margin-top: 1.5rem;
+  }
+
+  /* en mobile, los callouts se centran abajo del volante en vez de
+     pegados a cada zona (donde no entrarían en pantalla) */
+  .sec07__callout {
+    position: fixed;
+    left: 50%;
+    bottom: 6vh;
+    top: auto;
+    right: auto;
+    transform: translate(-50%, 12px);
+    width: min(86vw, 360px);
+    text-align: center;
+  }
+
+  .sec07__zone:hover .sec07__callout,
+  .sec07__zone:focus-visible .sec07__callout {
+    transform: translate(-50%, 0);
+  }
+
+  .sec07__callout--screen,
+  .sec07__callout--knobs,
+  .sec07__callout--left,
+  .sec07__callout--right {
+    margin: 0;
+  }
+}

@@ -306,13 +306,12 @@ img {
   background: #000;
 }
 
+/* FIX IMAGEN HERO */
 .hero__bg {
-  position: absolute;
-  inset: 0;
-  background-image: url(hero.png);
-  background-size: cover;
-  background-position: 68% center;
-  z-index: 0;
+  background-image: url('hero.png') !important;
+  background-size: cover !important;
+  background-position: center right !important;
+  background-repeat: no-repeat !important;
 }
 
 .hero__gradient {

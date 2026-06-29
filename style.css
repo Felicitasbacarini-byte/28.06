@@ -315,22 +315,17 @@ img {
 }
 
 .hero__gradient {
+  .hero__gradient {
   position: absolute;
   inset: 0;
   z-index: 1;
   background:
     linear-gradient(90deg,
-      rgba(0,0,0,0.92) 0%,
-      rgba(0,0,0,0.85) 22%,
-      rgba(0,0,0,0.55) 40%,
-      rgba(0,0,0,0.15) 58%,
-      rgba(0,0,0,0) 72%
-    ),
-    linear-gradient(180deg,
-      rgba(0,0,0,0.35) 0%,
-      rgba(0,0,0,0) 18%,
-      rgba(0,0,0,0) 80%,
-      rgba(0,0,0,0.45) 100%
+      rgba(0,0,0,0.88) 0%,
+      rgba(0,0,0,0.72) 24%,
+      rgba(0,0,0,0.38) 46%,
+      rgba(0,0,0,0.08) 68%,
+      rgba(0,0,0,0) 100%
     );
 }
 

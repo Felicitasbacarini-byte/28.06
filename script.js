@@ -1,415 +1,556 @@
-/* ====================================================================
-   APEX SIM RACING ACADEMY — script.js
-   ==================================================================== */
+// =========================
+// SCROLL SUAVE
+// =========================
 
-document.addEventListener('DOMContentLoaded', () => {
-  initCursorGlow();
-  initScrollReveal();
-  initCounters();
-  initSec05Typewriter();
-  initSec03Carousel();
-  initSec07Wheel();
-});
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  link.addEventListener("click", (event) => {
+    const targetId = link.getAttribute("href");
 
-/* ====================================================================
-   CURSOR GLOW
-   Destello amarillo que sigue al mouse, con efecto extra al pasar
-   sobre elementos interactivos (links, botones).
-   ==================================================================== */
+    if (targetId && targetId.length > 1) {
+      const target = document.querySelector(targetId);
 
-function initCursorGlow() {
-  const glow = document.getElementById('cursorGlow');
-  if (!glow) return;
-
-  let mouseX = 0;
-  let mouseY = 0;
-  let glowX = 0;
-  let glowY = 0;
-  let hasMoved = false;
-
-  window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    if (!hasMoved) {
-      hasMoved = true;
-      glowX = mouseX;
-      glowY = mouseY;
-      glow.classList.add('is-active');
+      if (target) {
+        event.preventDefault();
+        target.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      }
     }
   });
+});
 
-  window.addEventListener('mouseleave', () => {
-    glow.classList.remove('is-active');
+
+// =========================
+// CURSOR DESTELLO AMARILLO
+// =========================
+
+(() => {
+  const glow = document.querySelector(".cursor-glow");
+  if (!glow) return;
+
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let glowX = mouseX;
+  let glowY = mouseY;
+
+  window.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
   });
 
-  window.addEventListener('mouseenter', () => {
-    glow.classList.add('is-active');
-  });
-
-  // suaviza el movimiento del glow respecto al cursor real
   function animateGlow() {
     glowX += (mouseX - glowX) * 0.18;
     glowY += (mouseY - glowY) * 0.18;
-    glow.style.transform = `translate(${glowX}px, ${glowY}px) translate(-50%, -50%)`;
+
+    glow.style.left = `${glowX}px`;
+    glow.style.top = `${glowY}px`;
+
     requestAnimationFrame(animateGlow);
   }
-  requestAnimationFrame(animateGlow);
 
-  // estado "hover" sobre elementos clickeables
-  const interactiveEls = document.querySelectorAll('a, button, .btn');
-  interactiveEls.forEach((el) => {
-    el.addEventListener('mouseenter', () => glow.classList.add('is-hover'));
-    el.addEventListener('mouseleave', () => glow.classList.remove('is-hover'));
+  animateGlow();
+
+  document.querySelectorAll("a, button, .btn, .course-card, .pillar-card").forEach((element) => {
+    element.addEventListener("mouseenter", () => {
+      glow.classList.add("is-hover");
+    });
+
+    element.addEventListener("mouseleave", () => {
+      glow.classList.remove("is-hover");
+    });
   });
-}
+})();
 
-/* ====================================================================
-   SCROLL REVEAL
-   Los elementos marcados con [data-reveal] aparecen con fade + slide
-   a medida que entran en el viewport.
-   ==================================================================== */
 
-function initScrollReveal() {
-  const revealEls = document.querySelectorAll('[data-reveal]');
-  if (!revealEls.length) return;
+// =========================
+// REVEAL EN SCROLL
+// =========================
 
-  // En el hero, mostramos el contenido apenas carga la página
-  // (no requiere scroll, ya que está visible desde el inicio).
-  const observer = new IntersectionObserver(
+(() => {
+  const revealElements = document.querySelectorAll(".reveal");
+  if (!revealElements.length) return;
+
+  const revealObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
         }
       });
     },
     {
-      threshold: 0.15,
-      rootMargin: '0px 0px -40px 0px',
+      threshold: 0.16
     }
   );
 
-  revealEls.forEach((el) => observer.observe(el));
-
-  // Disparo inmediato para el contenido del hero (above the fold)
-  requestAnimationFrame(() => {
-    const heroReveals = document.querySelectorAll('.hero [data-reveal]');
-    heroReveals.forEach((el) => el.classList.add('is-visible'));
+  revealElements.forEach((element) => {
+    revealObserver.observe(element);
   });
-}
+})();
 
-/* ====================================================================
-   CONTADORES ANIMADOS
-   Los números de stats (+120, +3110, +500) cuentan desde 0 hasta su
-   valor final a medida que entran en el viewport, con una animación
-   lenta y desacelerada (ease-out).
-   ==================================================================== */
 
-function initCounters() {
-  const counters = document.querySelectorAll('[data-count-to]');
+// =========================
+// CONTADORES
+// =========================
+
+(() => {
+  const counters = document.querySelectorAll(".counter");
   if (!counters.length) return;
 
-  const DURATION = 2600; // ms — animación lenta, según lo pedido
-
-  function easeOutQuart(t) {
-    return 1 - Math.pow(1 - t, 4);
-  }
-
-  function animateCounter(el) {
-    const target = parseInt(el.getAttribute('data-count-to'), 10);
+  function animateCounter(element) {
+    const target = Number(element.dataset.target);
+    const prefix = element.dataset.prefix || "";
+    const duration = 1600;
     const startTime = performance.now();
 
-    function tick(now) {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / DURATION, 1);
-      const eased = easeOutQuart(progress);
-      const current = Math.round(eased * target);
-      el.textContent = '+' + current.toLocaleString('es-AR');
+    function updateCounter(currentTime) {
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      const easedProgress = 1 - Math.pow(1 - progress, 3);
+      const currentValue = Math.floor(target * easedProgress);
+
+      element.textContent = `${prefix}${currentValue}`;
 
       if (progress < 1) {
-        requestAnimationFrame(tick);
+        requestAnimationFrame(updateCounter);
       } else {
-        el.textContent = '+' + target.toLocaleString('es-AR');
+        element.textContent = `${prefix}${target}`;
       }
     }
-    requestAnimationFrame(tick);
+
+    requestAnimationFrame(updateCounter);
   }
 
-  const observer = new IntersectionObserver(
+  const counterObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           animateCounter(entry.target);
-          observer.unobserve(entry.target);
+          counterObserver.unobserve(entry.target);
         }
       });
     },
-    { threshold: 0.4 }
+    {
+      threshold: 0.6
+    }
   );
 
-  counters.forEach((el) => observer.observe(el));
-}
+  counters.forEach((counter) => {
+    counterObserver.observe(counter);
+  });
+})();
 
-/* ====================================================================
-   SECCIÓN 05 — FRASE (efecto letra por letra)
-   Cada carácter de la frase se envuelve en un span individual con
-   un transition-delay creciente. La clase "is-visible" en el
-   contenedor dispara la revelación de todos los spans en cascada.
-   A diferencia de los demás reveals del sitio, ESTE se repite cada
-   vez que la sección entra o sale del viewport (no usa unobserve).
-   ==================================================================== */
 
-function initSec05Typewriter() {
-  const frase = document.querySelector('[data-typewriter]');
-  if (!frase) return;
+// =========================
+// MANIFIESTO - LETRA POR LETRA
+// =========================
 
-  const DELAY_STEP = 18; // ms entre letra y letra
+(() => {
+  const statementSection = document.querySelector(".statement-section");
+  const statementText = document.querySelector(".js-letter-reveal");
 
-  // Envuelve cada carácter de texto en un span.sec05__char, agrupando
-  // las letras de cada palabra dentro de un span.sec05__word (con
-  // white-space: nowrap) para que el navegador nunca corte la línea
-  // en medio de una palabra. Los espacios quedan como chars sueltos
-  // entre palabras, que es donde sí puede saltar de línea.
-  // Preserva los <span class="sec05__highlight"> ya presentes.
-  function wrapChars(node) {
-    let charIndex = 0;
+  if (!statementSection || !statementText) return;
 
-    function makeChar(ch) {
-      const span = document.createElement('span');
-      span.className = 'sec05__char';
-      span.textContent = ch;
-      span.style.transitionDelay = `${charIndex * DELAY_STEP}ms`;
-      charIndex += 1;
-      return span;
-    }
+  function splitStatementLetters(block) {
+    let globalIndex = 0;
 
-    function walk(node) {
-      Array.from(node.childNodes).forEach((child) => {
-        if (child.nodeType === Node.TEXT_NODE) {
+    const lines = block.querySelectorAll(".animate-chars");
+
+    lines.forEach((line) => {
+      const nodes = Array.from(line.childNodes);
+
+      function processNode(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const text = node.textContent;
           const fragment = document.createDocumentFragment();
-          // separa el texto en palabras y espacios, conservando ambos
-          const tokens = child.textContent.split(/( +)/).filter((t) => t.length);
 
-          tokens.forEach((token) => {
-            if (token.trim() === '') {
-              // espacio(s): un char suelto por cada uno
-              token.split('').forEach((ch) => fragment.appendChild(makeChar(ch)));
+          [...text].forEach((char) => {
+            const span = document.createElement("span");
+            span.classList.add("char");
+
+            span.textContent = char === " " ? "\u00A0" : char;
+
+            if (char.trim() !== "") {
+              span.style.setProperty("--char-index", globalIndex);
+              globalIndex++;
             } else {
-              // palabra: agrupada en un span que no se puede cortar
-              const wordSpan = document.createElement('span');
-              wordSpan.className = 'sec05__word';
-              token.split('').forEach((ch) => wordSpan.appendChild(makeChar(ch)));
-              fragment.appendChild(wordSpan);
+              span.style.setProperty("--char-index", globalIndex);
             }
+
+            fragment.appendChild(span);
           });
 
-          child.replaceWith(fragment);
-        } else if (child.nodeType === Node.ELEMENT_NODE) {
-          // elementos como .sec05__highlight: se procesan recursivamente
-          // para que sus letras también queden individualizadas, pero
-          // siguen contando dentro de la misma secuencia de delays.
-          walk(child);
+          node.replaceWith(fragment);
         }
-      });
-    }
 
-    walk(node);
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          Array.from(node.childNodes).forEach(processNode);
+        }
+      }
+
+      nodes.forEach(processNode);
+    });
   }
 
-  wrapChars(frase);
+  splitStatementLetters(statementText);
 
-  const observer = new IntersectionObserver(
+  const statementObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-        } else {
-          entry.target.classList.remove('is-visible');
+          setTimeout(() => {
+            statementText.classList.add("is-visible");
+          }, 450);
+
+          statementObserver.unobserve(entry.target);
         }
       });
     },
-    { threshold: 0.3 }
+    {
+      threshold: 0.75
+    }
   );
 
-  observer.observe(frase);
-}
-/* ====================================================================
-   SECCIÓN 03 — LOS TRES PILARES (carrusel)
-   Una tarjeta queda "activa" (expandida) por vez. Las flechas prev/next
-   rotan el índice activo en loop; los dots reflejan cuál está activa.
-   ==================================================================== */
+  statementObserver.observe(statementSection);
+})();
 
-function initSec03Carousel() {
-  const track = document.querySelector('[data-sec03-track]');
-  if (!track) return;
 
-  const cards = Array.from(track.querySelectorAll('[data-sec03-card]'));
-  const dots = Array.from(document.querySelectorAll('[data-sec03-dot]'));
-  const prevBtn = document.querySelector('[data-sec03-prev]');
-  const nextBtn = document.querySelector('[data-sec03-next]');
+// =========================
+// PILARES - ACCORDION HORIZONTAL
+// =========================
 
-  let activeIndex = cards.findIndex((card) => card.classList.contains('is-active'));
-  if (activeIndex === -1) activeIndex = 0;
+(() => {
+  const pillarCards = document.querySelectorAll(".pillar-card");
+  if (!pillarCards.length) return;
 
-  function setActive(index) {
-    const total = cards.length;
-    const normalized = ((index % total) + total) % total; // soporta índices negativos
-    activeIndex = normalized;
+  pillarCards.forEach((card) => {
+    card.addEventListener("click", () => {
+      pillarCards.forEach((otherCard) => {
+        otherCard.classList.remove("is-active");
+      });
 
-    cards.forEach((card, i) => {
-      card.classList.toggle('is-active', i === activeIndex);
+      card.classList.add("is-active");
     });
 
-    dots.forEach((dot, i) => {
-      dot.classList.toggle('is-active', i === activeIndex);
-    });
-  }
-
-  // tocar una tarjeta colapsada también la activa
-  cards.forEach((card, i) => {
-    card.addEventListener('click', () => {
-      if (i !== activeIndex) setActive(i);
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        card.click();
+      }
     });
   });
+})();
 
-  if (prevBtn) {
-    prevBtn.addEventListener('click', () => setActive(activeIndex - 1));
-  }
 
-  if (nextBtn) {
-    nextBtn.addEventListener('click', () => setActive(activeIndex + 1));
-  }
+// =========================
+// TECNOLOGÍA DE ÉLITE / VOLANTE
+// =========================
 
-  setActive(activeIndex);
-}
-/* ====================================================================
-   SECCIÓN 07 — TECNOLOGÍA (viaje del volante hacia el centro)
-   El volante arranca con el tamaño/posición de ".sec07__wheel-slot"
-   (chico, al lado del texto, dentro del flujo normal del documento).
-   A medida que ese slot se acerca y empieza a salir del viewport por
-   arriba (scrolleando hacia abajo), el volante "fixed" toma el relevo
-   visual: se interpola desde la posición que el slot tenía en ese
-   instante hacia el centro de la pantalla, agrandándose. Es scroll
-   100% libre (sin pin/sticky): el progreso se deriva directamente de
-   cuánto se desplazó el slot respecto a su posición de reposo.
-   ==================================================================== */
+(() => {
+  const section = document.querySelector(".tech2-section");
+  const scene = document.querySelector(".tech2-scene");
+  const hotspots = document.querySelectorAll(".tech2-hotspot");
 
-function initSec07Wheel() {
-  const wrap = document.querySelector('[data-sec07-wheel]');
-  const slot = document.querySelector('[data-sec07-slot]');
-  if (!wrap || !slot) return;
+  const title = document.getElementById("tech2Title");
+  const text = document.getElementById("tech2Text");
+  const data = document.getElementById("tech2Data");
 
-  const ASPECT_RATIO = 805 / 463;
+  if (!section || !scene) return;
 
-  // cuántos px de scroll hace falta recorrer (desde que el slot
-  // empieza a salir por arriba) para completar el viaje al 100%
-  const TRAVEL_DISTANCE = 700;
-
-  let ticking = false;
-
-  // posición/tamaño de reposo del slot en coordenadas de DOCUMENTO,
-  // medidos una sola vez (load/resize), nunca durante el scroll.
-  let slotDocTop = 0;
-  let slotDocLeft = 0;
-  let slotWidth = 0;
-
-  function measure() {
-    const r = slot.getBoundingClientRect();
-    slotDocTop = r.top + window.scrollY;
-    slotDocLeft = r.left + window.scrollX;
-    slotWidth = r.width;
-  }
-
-  function easeInOutCubic(t) {
-    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-  }
-
-  function update() {
-    const vh = window.innerHeight;
-    const vw = window.innerWidth;
-
-    // posición del slot relativa al viewport EN ESTE INSTANTE —válido
-    // usar el scroll actual aquí porque es solo para saber cuánto ya
-    // se "comió" el scroll respecto al reposo, no como posición final.
-    const slotViewportTop = slotDocTop - window.scrollY;
-
-    // el viaje arranca cuando el slot está a punto de tocar el techo
-    // del viewport (slotViewportTop llega a ~0) y avanza durante
-    // TRAVEL_DISTANCE px de scroll adicional.
-    const progressRaw = -slotViewportTop / TRAVEL_DISTANCE;
-    const progress = Math.min(Math.max(progressRaw, 0), 1);
-    const eased = easeInOutCubic(progress);
-
-    // estado inicial fijo: tal como estaba el slot en el instante en
-    // que progress=0 (es decir, slotViewportTop≈0) — su X no cambia
-    // con el scroll (solo Y se mueve verticalmente con el documento),
-    // así que slotDocLeft - scrollX da directamente su X en viewport.
-    const startWidth = slotWidth;
-    const startLeft = slotDocLeft - window.scrollX;
-    const startTop = 0; // por definición, el viaje arranca cuando el slot toca y=0
-
-    // estado final: centrado en pantalla, más grande
-    const endWidth = Math.min(vw * 0.42, 620);
-    const endHeight = endWidth / ASPECT_RATIO;
-    const endLeft = (vw - endWidth) / 2;
-    const endTop = Math.max((vh - endHeight) / 2, vh * 0.14);
-
-    const currentWidth = startWidth + (endWidth - startWidth) * eased;
-    const currentLeft = startLeft + (endLeft - startLeft) * eased;
-    const currentTop = startTop + (endTop - startTop) * eased;
-
-    wrap.style.width = `${currentWidth}px`;
-    wrap.style.left = `${currentLeft}px`;
-    wrap.style.top = `${currentTop}px`;
-
-    // cross-fade simple: apenas progress > 0 (el slot real empezó a
-    // salir de pantalla), el wrap fixed se hace visible y el slot
-    // real se oculta, evitando un duplicado visual del volante.
-    const showFixed = progress > 0.001;
-    wrap.style.opacity = showFixed ? '1' : '0';
-    slot.style.opacity = showFixed ? '0' : '1';
-
-    // las zonas de hover solo responden una vez que el volante llegó
-    // (o casi) a su tamaño final
-    wrap.classList.toggle('is-interactive', progress > 0.92);
-
-    ticking = false;
-  }
-
-  function onScroll() {
-    if (!ticking) {
-      ticking = true;
-      requestAnimationFrame(update);
+  const info = {
+    screen: {
+      title: "Pantalla LCD",
+      text: "Lectura de velocidad, marcha, delta y datos clave para corregir decisiones en tiempo real.",
+      data: ["200 km/h", "Delta en vivo", "4 datos clave"]
+    },
+    bottom: {
+      title: "Ajuste rápido",
+      text: "Controles inferiores para modificar parámetros durante la sesión sin perder foco en la conducción.",
+      data: ["4 encoders", "Setup dinámico", "Respuesta inmediata"]
+    },
+    left: {
+      title: "Sector izquierdo",
+      text: "Comandos de precisión para acciones rápidas, gestión de funciones y reducción del tiempo de reacción.",
+      data: ["Acceso con pulgar", "Control lateral", "Menor reacción"]
+    },
+    right: {
+      title: "Sector derecho",
+      text: "Área destinada a funciones de carrera, cambios de configuración y control avanzado del vehículo.",
+      data: ["Gestión de carrera", "Inputs rápidos", "Mayor precisión"]
     }
+  };
+
+  function limit(value, min, max) {
+    return Math.min(Math.max(value, min), max);
   }
 
-  function onResize() {
-    measure();
-    onScroll();
+  function mix(a, b, t) {
+    return a + (b - a) * t;
   }
 
-  measure();
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onResize);
+  function updateTech2() {
+    if (window.innerWidth <= 980) return;
 
-  // font-display: swap (usado para Victor Mono embebida en base64) puede
-  // re-flowear el texto DESPUÉS del load inicial, cuando la fuente real
-  // termina de descargar/parsear — eso cambia la altura de las secciones
-  // anteriores y deja "vieja" la medición de measure(). Re-medimos apenas
-  // las fuentes están listas, y de nuevo tras un pequeño margen extra por
-  // si hay un reflow de último momento (imágenes grandes, layout shift).
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(() => {
-      measure();
-      update();
-    });
+    const rect = section.getBoundingClientRect();
+    const sceneHeight = scene.offsetHeight;
+    const total = section.offsetHeight - sceneHeight;
+    const progress = limit(-rect.top / total, 0, 1);
+
+    let left = 72;
+    let top = 42;
+    let width = 35;
+    let copyOpacity = 1;
+
+    scene.classList.remove("is-interactive");
+    scene.classList.remove("has-zone");
+    scene.dataset.zone = "";
+
+    // FASE 1: al costado del texto
+    if (progress <= 0.30) {
+      const t = progress / 0.30;
+
+      left = 72;
+      top = 42;
+      width = mix(35, 42, t);
+      copyOpacity = 1;
+    }
+
+    // FASE 2: viaja al centro y el texto desaparece
+    if (progress > 0.30 && progress <= 0.68) {
+      const t = (progress - 0.30) / 0.38;
+
+      left = mix(72, 39, t);
+      top = mix(42, 46, t);
+      width = mix(42, 58, t);
+
+      copyOpacity = 1 - limit(t * 1.7, 0, 1);
+    }
+
+    // FASE 3: queda grande e interactivo
+    if (progress > 0.68) {
+      const t = (progress - 0.68) / 0.32;
+
+      left = 39;
+      top = 46;
+      width = mix(58, 66, t);
+      copyOpacity = 0;
+
+      scene.classList.add("is-interactive");
+    }
+
+    scene.style.setProperty("--wheel-left", `${left}vw`);
+    scene.style.setProperty("--wheel-top", `${top}%`);
+    scene.style.setProperty("--wheel-width", `${width}vw`);
+    scene.style.setProperty("--copy-opacity", copyOpacity);
   }
-  window.addEventListener('load', () => {
-    measure();
-    update();
-    setTimeout(() => { measure(); update(); }, 300);
+
+  function showZone(zone) {
+    if (!scene.classList.contains("is-interactive")) return;
+
+    const item = info[zone];
+    if (!item || !title || !text || !data) return;
+
+    scene.dataset.zone = zone;
+    scene.classList.add("has-zone");
+
+    title.textContent = item.title;
+    text.textContent = item.text;
+    data.innerHTML = item.data.map((value) => `<small>${value}</small>`).join("");
+  }
+
+  function hideZone() {
+    scene.dataset.zone = "";
+    scene.classList.remove("has-zone");
+  }
+
+  hotspots.forEach((hotspot) => {
+    const zone = hotspot.dataset.zone;
+
+    hotspot.addEventListener("mouseenter", () => showZone(zone));
+    hotspot.addEventListener("mouseleave", hideZone);
+    hotspot.addEventListener("click", () => showZone(zone));
   });
 
-  update();
+  window.addEventListener("scroll", updateTech2);
+  window.addEventListener("resize", updateTech2);
+
+  updateTech2();
+})();
+// =========================
+// CIRCUITOS - SCROLL HORIZONTAL
+// =========================
+
+(() => {
+  const section = document.querySelector(".circuits-section");
+  const sticky = document.querySelector(".circuits-sticky");
+  const track = document.querySelector(".circuits-track");
+
+  if (!section || !sticky || !track) return;
+
+  function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+  }
+
+  function updateCircuitsGallery() {
+    if (window.innerWidth <= 1000) {
+      track.style.transform = "translateX(0)";
+      return;
+    }
+
+    const rect = section.getBoundingClientRect();
+    const sectionHeight = section.offsetHeight - window.innerHeight;
+    const progress = clamp(-rect.top / sectionHeight, 0, 1);
+
+    const trackWidth = track.scrollWidth;
+    const viewportWidth = window.innerWidth;
+    const maxMove = trackWidth - viewportWidth + window.innerWidth * 0.14;
+
+    track.style.transform = `translateX(${-progress * maxMove}px)`;
+  }
+
+  window.addEventListener("scroll", updateCircuitsGallery);
+  window.addEventListener("resize", updateCircuitsGallery);
+
+  updateCircuitsGallery();
+})();
+
+/* =========================
+   04 COACH SLIDER
+========================= */
+/* =========================
+   04 COACH SLIDER - SOLO HACIA ADELANTE
+========================= */
+
+const coaches = [
+  {
+    name: "FACUNDO ÁLVAREZ",
+    image: "./img/coach-facundo.png",
+    quote: "“Hay que entender qué está diciendo cada dato para convertir cada error en una mejora.”"
+  },
+  {
+    name: "LUCÍA MORENO",
+    image: "./img/coach-lucia.png",
+    quote: "“La telemetría no es solo para números: sirve para transformar la intuición en decisiones precisas.”"
+  }
+];
+
+const coachImage = document.getElementById("coachImage");
+const coachName = document.getElementById("coachName");
+const coachQuote = document.getElementById("coachQuote");
+const coachNext = document.getElementById("coachNext");
+
+let coachIndex = 0;
+
+/* precarga las imágenes para que no parpadeen */
+coaches.forEach((coach) => {
+  const img = new Image();
+  img.src = coach.image;
+});
+
+function renderCoach() {
+  if (!coachImage || !coachName || !coachQuote) return;
+
+  const coach = coaches[coachIndex];
+
+  coachImage.classList.add("is-changing");
+
+  setTimeout(() => {
+    coachImage.src = coach.image;
+    coachImage.alt = `${coach.name}, coach de Apex`;
+    coachName.textContent = coach.name;
+    coachQuote.textContent = coach.quote;
+
+    coachImage.onload = () => {
+      coachImage.classList.remove("is-changing");
+    };
+  }, 260);
 }
+
+if (coachNext) {
+  coachNext.addEventListener("click", () => {
+    coachIndex = (coachIndex + 1) % coaches.length;
+    renderCoach();
+  });
+}
+
+renderCoach();
+
+/* =========================
+   TESTIMONIOS - DUPLICAR PARA LOOP INFINITO
+========================= */
+
+const reviewsTrack = document.querySelector(".adv-reviews-track");
+
+if (reviewsTrack && !reviewsTrack.dataset.cloned) {
+  const originalCards = Array.from(reviewsTrack.children);
+
+  originalCards.forEach((card) => {
+    const clone = card.cloneNode(true);
+    clone.setAttribute("aria-hidden", "true");
+    reviewsTrack.appendChild(clone);
+  });
+
+  reviewsTrack.dataset.cloned = "true";
+}
+
+/* =========================
+   FAQ ACCORDION
+========================= */
+
+const faqItems = document.querySelectorAll(".adv-faq-item");
+
+faqItems.forEach((item) => {
+  const button = item.querySelector(".adv-faq-question");
+  const answer = item.querySelector(".adv-faq-answer");
+
+  if (!button || !answer) return;
+
+  button.addEventListener("click", () => {
+    const isOpen = item.classList.contains("is-open");
+
+    faqItems.forEach((otherItem) => {
+      const otherAnswer = otherItem.querySelector(".adv-faq-answer");
+      otherItem.classList.remove("is-open");
+
+      if (otherAnswer) {
+        otherAnswer.style.maxHeight = null;
+      }
+    });
+
+    if (!isOpen) {
+      item.classList.add("is-open");
+      answer.style.maxHeight = answer.scrollHeight + "px";
+    }
+  });
+});
+
+/* =========================
+   PANTALLA DE CARGA ENTRE PÁGINAS
+========================= */
+
+const pageLoader = document.getElementById("pageLoader");
+
+document.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", function (e) {
+    const href = this.getAttribute("href");
+
+    if (!href) return;
+
+    const isAnchor = href.startsWith("#");
+    const isExternal = href.startsWith("http") || href.startsWith("mailto:") || href.startsWith("tel:");
+    const opensNewTab = this.getAttribute("target") === "_blank";
+
+    if (isAnchor || isExternal || opensNewTab) return;
+
+    e.preventDefault();
+
+    if (pageLoader) {
+      pageLoader.classList.add("is-active");
+    }
+
+    setTimeout(() => {
+      window.location.href = href;
+    }, 2000);
+  });
+});

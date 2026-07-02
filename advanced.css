@@ -1,0 +1,3592 @@
+/* =========================
+   ADVANCED PAGE BASE
+========================= */
+
+.advanced-detail-page {
+  background: #000;
+  color: #fff;
+  overflow: hidden;
+}
+
+/* =========================
+   HERO ADVANCED
+========================= */
+
+.advanced-hero {
+  position: relative;
+  min-height: 100vh;
+  padding: 0 var(--side-padding);
+  background: #000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+/* imagen de fondo */
+.advanced-hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center right;
+  z-index: 1;
+}
+
+/* oscurecido para que lea el texto */
+.advanced-hero-dark {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.96) 0%,
+      rgba(0, 0, 0, 0.78) 28%,
+      rgba(0, 0, 0, 0.26) 62%,
+      rgba(0, 0, 0, 0.12) 100%
+    ),
+    linear-gradient(
+      0deg,
+      #000 0%,
+      rgba(0, 0, 0, 0) 28%
+    );
+}
+
+/* contenido */
+.advanced-hero-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  padding-top: 92px;
+}
+
+/* breadcrumb */
+.advanced-breadcrumb {
+  position: absolute;
+  top: 210px;
+  left: 0;
+  margin: 0;
+  font-family: var(--font-title);
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* bloque principal */
+.advanced-hero-copy {
+  max-width: 520px;
+  margin-top: 350px;
+}
+
+.advanced-hero-copy h1 {
+  margin: 0 0 24px;
+  font-family: var(--font-title);
+  font-size: clamp(58px, 5.4vw, 96px);
+  line-height: 0.9;
+  letter-spacing: -0.07em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--neon);
+}
+
+.advanced-hero-copy p {
+  margin: 0 0 42px;
+  font-family: var(--font-text);
+  font-size: clamp(17px, 1.2vw, 22px);
+  line-height: 1.25;
+  color: #f2f2f2;
+}
+
+/* botones */
+.advanced-hero-buttons {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+.advanced-main-btn,
+.advanced-secondary-btn {
+  height: 58px;
+  padding: 0 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: var(--font-text);
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+.advanced-main-btn {
+  background: var(--neon);
+  color: #000;
+  border: 1px solid var(--neon);
+}
+
+.advanced-secondary-btn {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #50a6a4;
+}
+
+.advanced-main-btn:hover,
+.advanced-secondary-btn:hover {
+  transform: translateY(-3px);
+}
+
+.advanced-main-btn:hover {
+  box-shadow: 0 0 26px rgba(228, 255, 20, 0.45);
+}
+
+.advanced-secondary-btn:hover {
+  background: #50a6a4;
+  color: #000;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+  .advanced-hero {
+    padding: 0 28px;
+  }
+
+  .advanced-breadcrumb {
+    top: 160px;
+  }
+
+  .advanced-hero-copy {
+    margin-top: 280px;
+  }
+
+  .advanced-hero-buttons {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .advanced-main-btn,
+  .advanced-secondary-btn {
+    height: 50px;
+    font-size: 13px;
+  }
+}
+/* =========================
+   FIX NAVBAR ADVANCED
+========================= */
+
+.advanced-page {
+  margin: 0;
+  background: #000;
+}
+
+/* navbar igual a la landing */
+.advanced-page .nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 118px;
+  padding: 0 var(--side-padding);
+  background: #1c1c1c;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* marca */
+.advanced-page .brand {
+  display: flex;
+  align-items: center;
+  width: 108px;
+  text-decoration: none;
+}
+
+.advanced-page .brand img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: invert(1) brightness(4);
+}
+
+/* menú */
+.advanced-page .nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+.advanced-page .nav-menu a {
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 700;
+  color: #f4f4f4;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.advanced-page .nav-menu a:hover {
+  color: var(--neon);
+}
+
+/* botón registrarme navbar */
+.advanced-page .nav-register {
+  min-width: 176px;
+  height: 56px;
+  border-radius: 6px;
+  background: var(--neon);
+  color: #000;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: var(--font-text);
+  font-size: 15px;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.advanced-page .nav-register:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 26px rgba(228, 255, 20, 0.45);
+}
+/* =========================
+   ADVANCED HERO
+========================= */
+
+.advanced-detail-page {
+  background: #000;
+  color: #fff;
+  overflow: hidden;
+}
+
+/* HERO GENERAL */
+.advanced-hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  padding: 0 var(--side-padding);
+  background: #000;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+}
+
+/* IMAGEN */
+.advanced-hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center right;
+  z-index: 1;
+}
+
+/* OSCURECIDO */
+.advanced-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.98) 0%,
+      rgba(0, 0, 0, 0.88) 24%,
+      rgba(0, 0, 0, 0.48) 48%,
+      rgba(0, 0, 0, 0.10) 100%
+    ),
+    linear-gradient(
+      0deg,
+      #000 0%,
+      rgba(0, 0, 0, 0) 26%
+    );
+}
+
+/* CONTENIDO */
+.advanced-hero-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  padding-top: 96px;
+}
+
+/* BREADCRUMB */
+.advanced-breadcrumb {
+  margin: 0 0 210px;
+  font-family: var(--font-title);
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* BLOQUE PRINCIPAL */
+.advanced-hero-copy {
+  max-width: 520px;
+}
+
+.advanced-hero-copy h1 {
+  margin: 0 0 22px;
+  font-family: var(--font-title);
+  font-size: clamp(58px, 5vw, 86px);
+  line-height: 0.9;
+  letter-spacing: -0.07em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--neon);
+}
+
+.advanced-hero-copy p {
+  margin: 0 0 36px;
+  max-width: 430px;
+  font-family: var(--font-text);
+  font-size: clamp(17px, 1.15vw, 21px);
+  line-height: 1.26;
+  color: #f2f2f2;
+}
+
+/* BOTONES */
+.advanced-hero-buttons {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.btn-advanced-primary,
+.btn-advanced-outline {
+  height: 54px;
+  padding: 0 32px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  border-radius: 0;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+.btn-advanced-primary {
+  background: var(--neon);
+  color: #000;
+  border: 1px solid var(--neon);
+}
+
+.btn-advanced-outline {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #50a6a4;
+}
+
+.btn-advanced-primary:hover,
+.btn-advanced-outline:hover {
+  transform: translateY(-3px);
+}
+
+.btn-advanced-primary:hover {
+  box-shadow: 0 0 28px rgba(228, 255, 20, 0.45);
+}
+
+.btn-advanced-outline:hover {
+  background: #50a6a4;
+  color: #000;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .advanced-hero {
+    padding: 0 28px;
+  }
+
+  .advanced-hero-content {
+    padding-top: 84px;
+  }
+
+  .advanced-breadcrumb {
+    margin-bottom: 150px;
+    font-size: 10px;
+  }
+
+  .advanced-hero-copy h1 {
+    font-size: 54px;
+  }
+
+  .advanced-hero-buttons {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .btn-advanced-primary,
+  .btn-advanced-outline {
+    height: 48px;
+    font-size: 12px;
+  }
+}
+/* =========================
+   AJUSTE HERO: SUBIR INFORMACIÓN
+========================= */
+
+.advanced-hero-content {
+  transform: translateY(-125px) !important;
+}
+
+/* achica un poco el espacio entre breadcrumb y título */
+.advanced-breadcrumb {
+  margin-bottom: 170px !important;
+}
+
+/* mantiene el bloque prolijo */
+.advanced-hero-copy {
+  max-width: 500px !important;
+}
+
+/* botones un poco más arriba junto con el bloque */
+.advanced-hero-copy p {
+  margin-bottom: 30px !important;
+}
+/* =========================
+   FIX BOTONES HERO ADVANCED
+========================= */
+
+.btn-advanced-primary,
+.btn-advanced-outline,
+.advanced-main-btn,
+.advanced-secondary-btn {
+  border-radius: 6px !important;
+  height: 54px !important;
+  padding: 0 32px !important;
+
+  font-family: var(--font-text) !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.btn-advanced-primary,
+.advanced-main-btn {
+  background: var(--neon) !important;
+  color: #000 !important;
+  border: 1px solid var(--neon) !important;
+}
+
+.btn-advanced-outline,
+.advanced-secondary-btn {
+  background: transparent !important;
+  color: #fff !important;
+  border: 1px solid #50a6a4 !important;
+}
+
+.btn-advanced-primary:hover,
+.btn-advanced-outline:hover,
+.advanced-main-btn:hover,
+.advanced-secondary-btn:hover {
+  transform: translateY(-2px) !important;
+}
+
+.btn-advanced-primary:hover,
+.advanced-main-btn:hover {
+  box-shadow: 0 0 26px rgba(228, 255, 20, 0.45) !important;
+}
+/* =========================
+   ADVANCED - 02 QUÉ VAS A APRENDER
+========================= */
+
+.advanced-learn-section {
+  position: relative;
+  background: #000;
+  color: #fff;
+  padding: 82px var(--side-padding) 125px;
+  overflow: hidden;
+}
+
+.advanced-section-tag {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-bottom: 82px;
+}
+
+.advanced-section-tag span {
+  width: 13px;
+  height: 13px;
+  display: block;
+  background: #50a6a4;
+  flex: 0 0 13px;
+}
+
+.advanced-section-tag p {
+  margin: 0;
+  font-family: var(--font-title);
+  font-size: 15px;
+  line-height: 1;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #50a6a4;
+}
+
+.advanced-learn-grid {
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: 145px;
+  align-items: start;
+}
+
+.advanced-learn-copy {
+  padding-left: 48px;
+}
+
+.advanced-learn-copy h2 {
+  margin: 0 0 62px;
+  font-family: var(--font-title);
+  font-size: clamp(42px, 3.65vw, 70px);
+  line-height: 0.95;
+  letter-spacing: -0.065em;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.advanced-learn-copy p {
+  max-width: 720px;
+  margin: 0 0 42px;
+  font-family: var(--font-text);
+  font-size: clamp(18px, 1.35vw, 27px);
+  line-height: 1.18;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.advanced-learn-btn {
+  margin-top: 88px;
+}
+
+.advanced-course-details {
+  padding-top: 28px;
+}
+
+.advanced-detail-title {
+  margin: 0 0 66px;
+  font-family: var(--font-title);
+  font-size: 22px;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.advanced-detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 26px;
+  max-width: 760px;
+  margin-bottom: 92px;
+}
+
+.advanced-detail-tags span {
+  min-height: 72px;
+  padding: 0 36px;
+  border: 1px solid rgba(228, 255, 20, 0.58);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-text);
+  font-size: clamp(22px, 1.8vw, 36px);
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.86);
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.advanced-detail-tags .advanced-live-tag {
+  min-width: 585px;
+  justify-content: flex-start;
+}
+
+.advanced-detail-tags .advanced-live-tag strong {
+  margin-right: 12px;
+  color: var(--neon);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.advanced-final-list p {
+  margin: 0 0 42px;
+  font-family: var(--font-title);
+  font-size: 22px;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.advanced-final-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.advanced-final-list li {
+  margin: 0 0 13px;
+  font-family: var(--font-text);
+  font-size: clamp(18px, 1.32vw, 27px);
+  line-height: 1.14;
+  color: rgba(255, 255, 255, 0.82);
+}
+/* =========================
+   FIX SCROLL ADVANCED
+========================= */
+
+html,
+body {
+  height: auto !important;
+  min-height: 100% !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+body.advanced-page {
+  height: auto !important;
+  min-height: 100% !important;
+  overflow-y: auto !important;
+}
+
+/* El main no debe encerrar todo en 100vh */
+.advanced-detail-page {
+  height: auto !important;
+  min-height: auto !important;
+  overflow: visible !important;
+}
+
+/* El hero ocupa la primera pantalla, pero deja seguir bajando */
+.advanced-hero {
+  position: relative !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  overflow: hidden !important;
+  flex-shrink: 0 !important;
+}
+
+/* La sección 02 queda debajo del hero */
+.advanced-learn-section {
+  position: relative !important;
+  display: block !important;
+  z-index: 5 !important;
+  min-height: 100vh !important;
+}
+/* =========================
+   FIX SECCIÓN 02 - ADVANCED
+   Ajuste visual final
+========================= */
+
+.advanced-learn-section {
+  min-height: 100vh !important;
+  padding: 72px var(--side-padding) 72px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+/* tag superior */
+.advanced-section-tag {
+  margin-bottom: 54px !important;
+  gap: 18px !important;
+}
+
+.advanced-section-tag span {
+  width: 10px !important;
+  height: 10px !important;
+  flex: 0 0 10px !important;
+}
+
+.advanced-section-tag p {
+  font-size: 12px !important;
+  letter-spacing: 0.26em !important;
+}
+
+/* grilla */
+.advanced-learn-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 0.9fr !important;
+  gap: 105px !important;
+  align-items: start !important;
+}
+
+/* columna izquierda */
+.advanced-learn-copy {
+  padding-left: 0 !important;
+}
+
+.advanced-learn-copy h2 {
+  white-space: nowrap !important;
+  margin: 0 0 46px !important;
+
+  font-size: clamp(38px, 3vw, 56px) !important;
+  line-height: 0.95 !important;
+  letter-spacing: -0.055em !important;
+}
+
+/* textos más chicos */
+.advanced-learn-copy p {
+  max-width: 620px !important;
+  margin: 0 0 30px !important;
+
+  font-size: clamp(15px, 1.05vw, 20px) !important;
+  line-height: 1.22 !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+}
+
+/* botón de abajo */
+.advanced-learn-btn {
+  margin-top: 46px !important;
+  height: 46px !important;
+  padding: 0 28px !important;
+  font-size: 13px !important;
+  border-radius: 6px !important;
+}
+
+/* columna derecha */
+.advanced-course-details {
+  padding-top: 32px !important;
+}
+
+.advanced-detail-title {
+  margin: 0 0 48px !important;
+  font-size: 17px !important;
+  letter-spacing: 0.12em !important;
+}
+
+/* botones detalle: dos arriba, uno abajo */
+.advanced-detail-tags {
+  display: grid !important;
+  grid-template-columns: auto auto !important;
+  gap: 18px 22px !important;
+  max-width: 650px !important;
+  margin-bottom: 76px !important;
+}
+
+.advanced-detail-tags span {
+  min-height: 56px !important;
+  padding: 0 28px !important;
+
+  font-size: clamp(17px, 1.25vw, 25px) !important;
+  line-height: 1 !important;
+
+  border: 1px solid rgba(228, 255, 20, 0.55) !important;
+  background: rgba(255, 255, 255, 0.015) !important;
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease !important;
+}
+
+/* tercer botón ocupa la fila de abajo */
+.advanced-detail-tags .advanced-live-tag {
+  grid-column: 1 / 3 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  justify-content: flex-start !important;
+}
+
+.advanced-detail-tags .advanced-live-tag strong {
+  color: var(--neon) !important;
+  margin-right: 10px !important;
+}
+
+/* hover de los botones de detalle */
+.advanced-detail-tags span:hover {
+  transform: translateY(-4px) !important;
+  border-color: var(--neon) !important;
+  background: rgba(228, 255, 20, 0.045) !important;
+  box-shadow:
+    0 0 14px rgba(228, 255, 20, 0.18),
+    inset 0 0 12px rgba(228, 255, 20, 0.05) !important;
+}
+
+/* lista final más chica */
+.advanced-final-list p {
+  margin: 0 0 28px !important;
+  font-size: 17px !important;
+  letter-spacing: 0.12em !important;
+}
+
+.advanced-final-list li {
+  margin-bottom: 9px !important;
+  font-size: clamp(15px, 1.05vw, 20px) !important;
+  line-height: 1.18 !important;
+}
+
+/* hover botón inscribirme */
+.advanced-learn-btn:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 0 24px rgba(228, 255, 20, 0.42) !important;
+}
+/* =========================
+   ADVANCED - 03 PROGRAMA SCROLL
+========================= */
+
+.advanced-program-scroll-section {
+  position: relative;
+  height: 420vh;
+  background: #000;
+  color: #fff;
+}
+
+.advanced-program-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 82px var(--side-padding) 70px;
+  overflow: hidden;
+  background: #000;
+}
+
+/* tag */
+.advanced-program-tag {
+  margin-bottom: 64px !important;
+}
+
+/* intro izquierda */
+.advanced-program-intro {
+  position: relative;
+  z-index: 4;
+  max-width: 700px;
+}
+
+.advanced-program-intro h2 {
+  margin: 0 0 52px;
+  font-family: var(--font-title);
+  font-size: clamp(38px, 3.4vw, 64px);
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #fff;
+}
+
+.advanced-program-intro p {
+  max-width: 640px;
+  margin: 0;
+  font-family: var(--font-text);
+  font-size: clamp(16px, 1.08vw, 22px);
+  line-height: 1.24;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* pixeles amarillos arriba a la derecha */
+.advanced-program-pixels {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 250px;
+  height: 190px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.advanced-program-pixels span {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  background: var(--neon);
+}
+
+.advanced-program-pixels span:nth-child(1) { top: 0; right: 48px; }
+.advanced-program-pixels span:nth-child(2) { top: 0; right: 0; }
+.advanced-program-pixels span:nth-child(3) { top: 48px; right: 96px; }
+.advanced-program-pixels span:nth-child(4) { top: 48px; right: 48px; background: #000; }
+.advanced-program-pixels span:nth-child(5) { top: 48px; right: 0; }
+.advanced-program-pixels span:nth-child(6) { top: 96px; right: 144px; }
+.advanced-program-pixels span:nth-child(7) { top: 96px; right: 48px; }
+.advanced-program-pixels span:nth-child(8) { top: 96px; right: 0; background: #000; }
+.advanced-program-pixels span:nth-child(9) { top: 144px; right: 48px; }
+
+/* ventana horizontal */
+.advanced-program-window {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 74px;
+  height: 44vh;
+  overflow: hidden;
+  z-index: 3;
+}
+
+.advanced-program-track {
+  position: absolute;
+  left: 42vw;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 230px;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+/* cada clase */
+.advanced-program-item {
+  flex: 0 0 520px;
+  text-align: center;
+}
+
+/* número Inter Light */
+.advanced-program-number {
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 46px;
+}
+
+.advanced-program-number span {
+  font-family: var(--font-text);
+  font-weight: 300;
+  font-size: clamp(120px, 14vw, 230px);
+  line-height: 0.74;
+  letter-spacing: -0.08em;
+  color: var(--neon);
+}
+
+.advanced-program-number i {
+  width: 16px;
+  height: 16px;
+  display: block;
+  margin-bottom: 18px;
+  background: #50a6a4;
+  font-style: normal;
+}
+
+.advanced-program-item h3 {
+  margin: 0 0 26px;
+  font-family: var(--font-text);
+  font-size: clamp(18px, 1.35vw, 28px);
+  line-height: 1.08;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.advanced-program-item p {
+  max-width: 350px;
+  margin: 0 auto;
+  font-family: var(--font-text);
+  font-size: clamp(14px, 0.95vw, 18px);
+  line-height: 1.24;
+  color: rgba(255, 255, 255, 0.76);
+}
+
+/* responsive */
+@media (max-width: 900px) {
+  .advanced-program-scroll-section {
+    height: auto;
+  }
+
+  .advanced-program-sticky {
+    position: relative;
+    height: auto;
+    min-height: 100vh;
+    padding: 72px 28px;
+  }
+
+  .advanced-program-window {
+    position: relative;
+    height: auto;
+    margin-top: 80px;
+    overflow: visible;
+  }
+
+  .advanced-program-track {
+    position: relative;
+    left: 0;
+    display: grid;
+    gap: 80px;
+    transform: none !important;
+  }
+
+  .advanced-program-item {
+    flex: none;
+    width: 100%;
+  }
+
+  .advanced-program-pixels {
+    transform: scale(0.72);
+    transform-origin: top right;
+  }
+}
+/* =========================
+   FIX PROGRAMA: SCROLL MÁS LENTO + CUADRADITO ALINEADO
+========================= */
+
+/* más altura = la sección queda fija más tiempo */
+.advanced-program-scroll-section {
+  height: 850vh !important;
+}
+
+/* ventana de lectura más cómoda */
+.advanced-program-sticky {
+  height: 100vh !important;
+}
+
+/* sube un poco el carrusel para que se lea bien */
+.advanced-program-window {
+  bottom: 90px !important;
+  height: 46vh !important;
+}
+
+/* más aire entre clases */
+.advanced-program-track {
+  gap: 260px !important;
+}
+
+/* cada clase ocupa buen ancho para lectura */
+.advanced-program-item {
+  flex: 0 0 560px !important;
+}
+
+/* número + cuadradito */
+.advanced-program-number {
+  position: relative !important;
+  display: inline-block !important;
+  margin-bottom: 48px !important;
+}
+
+/* número en Inter Light */
+.advanced-program-number span {
+  display: inline-block !important;
+  font-family: var(--font-text) !important;
+  font-weight: 300 !important;
+  font-size: clamp(130px, 14vw, 235px) !important;
+  line-height: 0.74 !important;
+  letter-spacing: -0.08em !important;
+  color: var(--neon) !important;
+}
+
+/* cuadradito celeste alineado al final del número */
+.advanced-program-number i {
+  position: absolute !important;
+  left: calc(100% + 22px) !important;
+  bottom: 9px !important;
+
+  width: 17px !important;
+  height: 17px !important;
+
+  display: block !important;
+  background: #50a6a4 !important;
+  margin: 0 !important;
+  font-style: normal !important;
+}
+
+/* textos un poco más legibles */
+.advanced-program-item h3 {
+  margin-top: 0 !important;
+  margin-bottom: 24px !important;
+}
+
+.advanced-program-item p {
+  max-width: 365px !important;
+}
+/* =========================
+   ADVANCED - 03 PROGRAMA PINNED
+========================= */
+
+html,
+body,
+body.advanced-page {
+  height: auto !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+.advanced-detail-page {
+  height: auto !important;
+  overflow: visible !important;
+}
+
+.adv-step-section {
+  position: relative !important;
+  height: 1300vh !important;
+  background: #000 !important;
+  color: #fff !important;
+}
+
+.adv-step-pin {
+  position: sticky !important;
+  top: 0 !important;
+  height: 100vh !important;
+  overflow: hidden !important;
+  background: #000 !important;
+  padding: 82px var(--side-padding) 70px !important;
+}
+
+/* tag */
+.adv-step-tag {
+  margin-bottom: 58px !important;
+}
+
+/* texto inicial */
+.adv-step-intro {
+  position: relative;
+  z-index: 5;
+  max-width: 680px;
+}
+
+.adv-step-intro h2 {
+  margin: 0 0 48px;
+  font-family: var(--font-title);
+  font-size: clamp(38px, 3.3vw, 62px);
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+  color: #fff;
+  font-weight: 500;
+}
+
+.adv-step-intro p {
+  max-width: 650px;
+  margin: 0;
+  font-family: var(--font-text);
+  font-size: clamp(16px, 1.05vw, 22px);
+  line-height: 1.25;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* pixeles amarillos */
+.adv-step-pixels {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 255px;
+  height: 210px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.adv-step-pixels span {
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  background: var(--neon);
+}
+
+.adv-step-pixels span:nth-child(1) { top: 0; right: 52px; }
+.adv-step-pixels span:nth-child(2) { top: 0; right: 0; }
+.adv-step-pixels span:nth-child(3) { top: 52px; right: 104px; }
+.adv-step-pixels span:nth-child(4) { top: 52px; right: 52px; background: #000; }
+.adv-step-pixels span:nth-child(5) { top: 52px; right: 0; }
+.adv-step-pixels span:nth-child(6) { top: 104px; right: 156px; }
+.adv-step-pixels span:nth-child(7) { top: 104px; right: 52px; }
+.adv-step-pixels span:nth-child(8) { top: 104px; right: 0; background: #000; }
+.adv-step-pixels span:nth-child(9) { top: 156px; right: 52px; }
+
+/* zona de números */
+.adv-step-stage {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 78px;
+  height: 44vh;
+  overflow: hidden;
+  z-index: 4;
+}
+
+.adv-step-track {
+  position: absolute;
+  left: 42vw;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 270px;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.55s ease;
+}
+
+.adv-step-card {
+  flex: 0 0 560px;
+  text-align: center;
+  opacity: 0.35;
+  transform: scale(0.96);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.adv-step-card.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* número Inter Light */
+.adv-step-number {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 46px;
+}
+
+.adv-step-number span {
+  display: inline-block;
+  font-family: var(--font-text);
+  font-weight: 300;
+  font-size: clamp(130px, 14vw, 235px);
+  line-height: 0.74;
+  letter-spacing: -0.08em;
+  color: var(--neon);
+}
+
+/* cuadradito celeste alineado al final del número */
+.adv-step-number i {
+  position: absolute;
+  left: calc(100% + 22px);
+  bottom: 9px;
+  width: 17px;
+  height: 17px;
+  display: block;
+  background: #50a6a4;
+  margin: 0;
+  font-style: normal;
+}
+
+.adv-step-card h3 {
+  margin: 0 0 24px;
+  font-family: var(--font-text);
+  font-size: clamp(18px, 1.3vw, 27px);
+  line-height: 1.08;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.adv-step-card p {
+  max-width: 360px;
+  margin: 0 auto;
+  font-family: var(--font-text);
+  font-size: clamp(14px, 0.95vw, 18px);
+  line-height: 1.24;
+  color: rgba(255, 255, 255, 0.76);
+}
+
+/* =========================
+   FIX DEFINITIVO PROGRAMA - SIN STICKY
+========================= */
+
+.adv-step-section {
+  position: relative !important;
+  height: 1200vh !important;
+  background: #000 !important;
+  color: #fff !important;
+}
+
+/* pantalla fija por JS */
+.adv-step-pin {
+  position: relative !important;
+  height: 100vh !important;
+  width: 100% !important;
+  background: #000 !important;
+  padding: 82px var(--side-padding) 70px !important;
+  overflow: hidden !important;
+}
+
+/* cuando entra en la zona, queda clavada */
+.adv-step-pin.is-fixed {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 50 !important;
+}
+
+/* cuando termina, queda al final de la sección */
+.adv-step-pin.is-bottom {
+  position: absolute !important;
+  top: auto !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+}
+
+/* carrusel */
+.adv-step-stage {
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 78px !important;
+  height: 44vh !important;
+  overflow: hidden !important;
+  z-index: 4 !important;
+}
+
+.adv-step-track {
+  position: absolute !important;
+  left: 42vw !important;
+  top: 0 !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 270px !important;
+  transition: transform 0.55s ease !important;
+  will-change: transform !important;
+}
+
+.adv-step-card {
+  flex: 0 0 560px !important;
+  text-align: center !important;
+  opacity: 0.35 !important;
+  transform: scale(0.96) !important;
+  transition: opacity 0.35s ease, transform 0.35s ease !important;
+}
+
+.adv-step-card.is-active {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+}
+
+/* número Inter Light */
+.adv-step-number {
+  position: relative !important;
+  display: inline-block !important;
+  margin-bottom: 46px !important;
+}
+
+.adv-step-number span {
+  display: inline-block !important;
+  font-family: var(--font-text) !important;
+  font-weight: 300 !important;
+  font-size: clamp(130px, 14vw, 235px) !important;
+  line-height: 0.74 !important;
+  letter-spacing: -0.08em !important;
+  color: var(--neon) !important;
+}
+
+/* cuadradito alineado al final del número */
+.adv-step-number i {
+  position: absolute !important;
+  left: calc(100% + 22px) !important;
+  bottom: 10px !important;
+  width: 17px !important;
+  height: 17px !important;
+  display: block !important;
+  background: #50a6a4 !important;
+  margin: 0 !important;
+  font-style: normal !important;
+}
+
+/* =========================
+   FIX PROGRAMA - CENTRAR NÚMERO Y TEXTO
+========================= */
+
+.adv-step-stage {
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 62px !important;
+  height: 48vh !important;
+  overflow: hidden !important;
+  z-index: 4 !important;
+}
+
+/* El track arranca en el centro real de la pantalla */
+.adv-step-track {
+  position: absolute !important;
+  left: calc(50vw - 280px) !important; /* 280px = mitad de card de 560px */
+  top: 50% !important;
+  height: auto !important;
+
+  display: flex !important;
+  align-items: center !important;
+  gap: 270px !important;
+
+  will-change: transform !important;
+  transition: transform 0.55s ease !important;
+}
+
+/* Cada bloque ocupa el centro de pantalla */
+.adv-step-card {
+  flex: 0 0 560px !important;
+  width: 560px !important;
+  text-align: center !important;
+}
+
+/* número + texto centrados */
+.adv-step-number {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-bottom: 44px !important;
+}
+
+.adv-step-card h3 {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.adv-step-card p {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 370px !important;
+}
+/* =========================
+   FIX NAVBAR FIJA ADVANCED
+========================= */
+
+body.advanced-page .navbar,
+.advanced-page .navbar,
+.navbar {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  z-index: 999999 !important;
+}
+
+/* evita que la sección fija del programa tape la navbar */
+.adv-step-pin.is-fixed {
+  z-index: 50 !important;
+}
+
+/* si la sección del programa queda debajo de la nav, dejala así */
+.adv-step-pin.is-fixed {
+  top: 0 !important;
+}
+
+/* asegura que el hero no se meta raro debajo de la nav */
+.advanced-hero {
+  padding-top: 92px !important;
+}
+/* =========================
+   ADVANCED - 03 PROGRAMA MANUAL HORIZONTAL
+========================= */
+
+.adv-program-free-section {
+  position: relative;
+  background: #000;
+  color: #fff;
+  padding: 88px var(--side-padding) 120px;
+  overflow: hidden;
+}
+
+.adv-program-free-tag {
+  margin-bottom: 58px !important;
+}
+
+.adv-program-free-header {
+  position: relative;
+  z-index: 3;
+  max-width: 700px;
+  margin-bottom: 72px;
+}
+
+.adv-program-free-header h2 {
+  margin: 0 0 46px;
+  font-family: var(--font-title);
+  font-size: clamp(38px, 3.3vw, 62px);
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+  color: #fff;
+  font-weight: 500;
+}
+
+.adv-program-free-header p {
+  max-width: 650px;
+  margin: 0;
+  font-family: var(--font-text);
+  font-size: clamp(15px, 1vw, 20px);
+  line-height: 1.25;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* indicación horizontal */
+.adv-program-scroll-hint {
+  margin-bottom: 30px;
+  font-family: var(--font-title);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #50a6a4;
+}
+
+/* ventana de scroll */
+.adv-program-free-window {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 22px 0 32px;
+  scroll-snap-type: x mandatory;
+  cursor: grab;
+}
+
+.adv-program-free-window:active {
+  cursor: grabbing;
+}
+
+/* scrollbar prolijo */
+.adv-program-free-window::-webkit-scrollbar {
+  height: 7px;
+}
+
+.adv-program-free-window::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.adv-program-free-window::-webkit-scrollbar-thumb {
+  background: var(--neon);
+  border-radius: 999px;
+}
+
+.adv-program-free-track {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(80px, 10vw, 170px);
+  width: max-content;
+  padding-right: 18vw;
+}
+
+/* card */
+.adv-program-free-card {
+  flex: 0 0 min(540px, 70vw);
+  text-align: center;
+  scroll-snap-align: center;
+  padding: 18px 0 0;
+}
+
+/* número + cuadradito */
+.adv-program-free-number {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 44px;
+}
+
+.adv-program-free-number span {
+  display: inline-block;
+  font-family: var(--font-text);
+  font-weight: 300;
+  font-size: clamp(120px, 13vw, 220px);
+  line-height: 0.74;
+  letter-spacing: -0.08em;
+  color: var(--neon);
+}
+
+/* cuadradito celeste alineado con el final del número */
+.adv-program-free-number i {
+  position: absolute;
+  left: calc(100% + 22px);
+  bottom: 9px;
+  width: 17px;
+  height: 17px;
+  display: block;
+  background: #50a6a4;
+  font-style: normal;
+}
+
+.adv-program-free-card h3 {
+  margin: 0 0 24px;
+  font-family: var(--font-text);
+  font-size: clamp(17px, 1.25vw, 26px);
+  line-height: 1.08;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.adv-program-free-card p {
+  max-width: 360px;
+  margin: 0 auto;
+  font-family: var(--font-text);
+  font-size: clamp(13px, 0.9vw, 17px);
+  line-height: 1.24;
+  color: rgba(255, 255, 255, 0.76);
+}
+
+/* pixeles amarillos decorativos */
+.adv-program-free-pixels {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 255px;
+  height: 210px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.adv-program-free-pixels span {
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  background: var(--neon);
+}
+
+.adv-program-free-pixels span:nth-child(1) { top: 0; right: 52px; }
+.adv-program-free-pixels span:nth-child(2) { top: 0; right: 0; }
+.adv-program-free-pixels span:nth-child(3) { top: 52px; right: 104px; }
+.adv-program-free-pixels span:nth-child(4) { top: 52px; right: 52px; background: #000; }
+.adv-program-free-pixels span:nth-child(5) { top: 52px; right: 0; }
+.adv-program-free-pixels span:nth-child(6) { top: 104px; right: 156px; }
+.adv-program-free-pixels span:nth-child(7) { top: 104px; right: 52px; }
+.adv-program-free-pixels span:nth-child(8) { top: 104px; right: 0; background: #000; }
+.adv-program-free-pixels span:nth-child(9) { top: 156px; right: 52px; }
+
+@media (max-width: 900px) {
+  .adv-program-free-section {
+    padding: 76px 28px 95px;
+  }
+
+  .adv-program-free-card {
+    flex-basis: 82vw;
+  }
+
+  .adv-program-free-track {
+    gap: 60px;
+    padding-right: 40px;
+  }
+
+  .adv-program-free-pixels {
+    transform: scale(0.7);
+    transform-origin: top right;
+  }
+}
+/* =========================
+   04 COACH
+========================= */
+
+.adv-coach-section {
+  background: #000;
+  color: #fff;
+  padding: 110px var(--side-padding) 130px;
+  position: relative;
+  overflow: hidden;
+}
+
+.adv-coach-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.adv-coach-tag {
+  margin-bottom: 34px;
+}
+
+.adv-coach-grid {
+  display: grid;
+  grid-template-columns: minmax(420px, 1fr) minmax(420px, 640px);
+  gap: clamp(48px, 6vw, 110px);
+  align-items: start;
+}
+
+.adv-coach-copy h2 {
+  margin: 0 0 46px;
+  font-family: var(--font-title);
+  font-size: clamp(46px, 4.2vw, 84px);
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.adv-coach-quote {
+  margin: 0 0 54px;
+  max-width: 620px;
+  font-family: var(--font-text);
+  font-size: clamp(25px, 2vw, 45px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: #f2f2f2;
+}
+
+.adv-coach-copy p:not(.adv-coach-quote):not(.adv-coach-highlight) {
+  max-width: 620px;
+  margin: 0 0 26px;
+  font-family: var(--font-text);
+  font-size: clamp(17px, 1.08vw, 22px);
+  line-height: 1.25;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.adv-coach-highlight {
+  max-width: 620px;
+  margin: 0 0 30px;
+  font-family: var(--font-text);
+  font-size: clamp(17px, 1.08vw, 22px);
+  line-height: 1.25;
+  color: var(--neon);
+  font-weight: 700;
+}
+
+.adv-coach-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 820px;
+}
+
+.adv-coach-card {
+  width: min(100%, 610px);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+.adv-coach-card.is-changing {
+  opacity: 0.35;
+  transform: translateY(10px);
+}
+
+.adv-coach-photo {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.adv-coach-name {
+  position: absolute;
+  left: 50%;
+  bottom: -56px;
+  transform: translateX(-50%);
+  margin: 0;
+  font-family: var(--font-title);
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.adv-coach-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 64px;
+  height: 64px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease, filter 0.2s ease;
+  opacity: 0.95;
+}
+
+.adv-coach-arrow:hover {
+  transform: translateY(-50%) scale(1.08);
+  opacity: 1;
+}
+
+.adv-coach-arrow img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(72%) sepia(32%) saturate(532%) hue-rotate(133deg) brightness(95%) contrast(91%);
+}
+
+.adv-coach-prev {
+  left: -88px;
+}
+
+.adv-coach-prev img {
+  transform: rotate(180deg);
+}
+
+.adv-coach-next {
+  right: -88px;
+}
+
+/* reveal general */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 1200px) {
+  .adv-coach-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .adv-coach-copy {
+    max-width: 100%;
+  }
+
+  .adv-coach-visual {
+    min-height: auto;
+    padding-bottom: 80px;
+  }
+
+  .adv-coach-prev {
+    left: -18px;
+  }
+
+  .adv-coach-next {
+    right: -18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .adv-coach-section {
+    padding: 78px 28px 100px;
+  }
+
+  .adv-coach-copy h2 {
+    font-size: 42px;
+    margin-bottom: 28px;
+  }
+
+  .adv-coach-quote {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+
+  .adv-coach-copy p:not(.adv-coach-quote):not(.adv-coach-highlight),
+  .adv-coach-highlight {
+    font-size: 16px;
+  }
+
+  .adv-coach-arrow {
+    width: 52px;
+    height: 52px;
+  }
+
+  .adv-coach-prev {
+    left: -6px;
+  }
+
+  .adv-coach-next {
+    right: -6px;
+  }
+
+  .adv-coach-name {
+    font-size: 18px;
+    bottom: -42px;
+    letter-spacing: 0.12em;
+  }
+}
+/* =========================
+   04 COACH - LIMPIO Y ALINEADO
+========================= */
+
+.adv-coach-section {
+  background: #000;
+  color: #fff;
+  padding: 110px var(--side-padding) 130px;
+  position: relative;
+  overflow: hidden;
+}
+
+.adv-coach-inner {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.adv-coach-tag {
+  margin-bottom: 38px !important;
+}
+
+.adv-coach-grid {
+  display: grid;
+  grid-template-columns: minmax(420px, 0.95fr) minmax(480px, 0.9fr);
+  gap: clamp(70px, 7vw, 130px);
+  align-items: start;
+}
+
+/* texto izquierda */
+.adv-coach-copy {
+  padding-top: 0;
+}
+
+.adv-coach-copy h2 {
+  margin: 0 0 64px;
+  font-family: var(--font-title);
+  font-size: clamp(40px, 3.8vw, 50px);
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+  color: #fff;
+  font-weight: 500;
+}
+
+.adv-coach-quote {
+  margin: 0 0 56px;
+  max-width: 610px;
+  font-family: var(--font-title);
+  font-size: clamp(24px, 1.7vw, 38px);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  color: rgba(228, 255, 20, 0.9);
+}
+
+.adv-coach-copy p:not(.adv-coach-quote):not(.adv-coach-highlight) {
+  max-width: 640px;
+  margin: 0 0 30px;
+  font-family: var(--font-text);
+  font-size: clamp(16px, 1vw, 21px);
+  line-height: 1.28;
+  color: rgba(254, 251, 251, 0.82);
+}
+
+.adv-coach-highlight {
+  max-width: 640px;
+  margin: 0 0 30px;
+  font-family: var(--font-text);
+  font-size: clamp(16px, 1vw, 21px);
+  line-height: 1.28;
+  color: var(--neon);
+  font-weight: 800;
+}
+
+/* imagen derecha */
+.adv-coach-visual {
+  position: relative;
+  min-height: 650px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 58px;
+}
+
+.adv-coach-card {
+  width: min(100%, 600px);
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+.adv-coach-card::before,
+.adv-coach-card::after {
+  display: none !important;
+  content: none !important;
+}
+
+.adv-coach-card.is-changing {
+  opacity: 0.25;
+  transform: translateY(8px);
+}
+
+.adv-coach-photo {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.adv-coach-name {
+  margin: 34px 0 0;
+  font-family: var(--font-title);
+  font-size: 17px;
+  line-height: 1;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #fff;
+  text-align: center;
+}
+
+/* flechas celestes */
+.adv-coach-arrow {
+  position: absolute;
+  top: 47%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+
+  font-family: var(--font-title);
+  font-size: 54px;
+  line-height: 1;
+  color: #50a6a4;
+
+  cursor: pointer;
+  z-index: 8;
+  transition: transform 0.22s ease, opacity 0.22s ease, color 0.22s ease, text-shadow 0.22s ease;
+}
+
+.adv-coach-arrow:hover {
+  transform: translateY(-50%) scale(1.08);
+  color: var(--neon);
+  text-shadow: 0 0 18px rgba(80, 166, 164, 0.75);
+}
+
+.adv-coach-prev {
+  left: -54px;
+}
+
+.adv-coach-next {
+  right: -54px;
+}
+
+/* elimina cualquier imagen de flecha vieja si quedó */
+.adv-coach-arrow img {
+  display: none !important;
+}
+
+/* si por ahora hay un solo coach, ocultamos la flecha izquierda */
+.adv-coach-prev {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .adv-coach-grid {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+
+  .adv-coach-visual {
+    min-height: auto;
+    padding-top: 0;
+  }
+
+  .adv-coach-prev {
+    left: 0;
+  }
+
+  .adv-coach-next {
+    right: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .adv-coach-section {
+    padding: 80px 28px 105px;
+  }
+
+  .adv-coach-copy h2 {
+    font-size: 42px;
+    margin-bottom: 34px;
+  }
+
+  .adv-coach-quote {
+    font-size: 23px;
+    margin-bottom: 34px;
+  }
+
+  .adv-coach-arrow {
+    font-size: 38px;
+  }
+
+  .adv-coach-name {
+    font-size: 13px;
+    letter-spacing: 0.22em;
+  }
+}
+/* =========================
+   AJUSTE FINO 04 COACH
+========================= */
+
+/* grilla más parecida al boceto */
+.adv-coach-grid {
+  grid-template-columns: minmax(420px, 0.88fr) minmax(520px, 0.92fr) !important;
+  gap: clamp(70px, 7vw, 125px) !important;
+  align-items: start !important;
+}
+
+/* columna de texto más angosta */
+.adv-coach-copy {
+  max-width: 620px !important;
+}
+
+/* título */
+.adv-coach-copy h2 {
+  margin-bottom: 64px !important;
+}
+
+/* frase con líneas más cortas */
+.adv-coach-quote {
+  max-width: 520px !important;
+  font-size: clamp(24px, 1.65vw, 36px) !important;
+  line-height: 1.12 !important;
+  margin-bottom: 58px !important;
+}
+
+/* párrafos más cortos */
+.adv-coach-copy p:not(.adv-coach-quote):not(.adv-coach-highlight),
+.adv-coach-highlight {
+  max-width: 560px !important;
+  font-size: clamp(16px, 1vw, 21px) !important;
+  line-height: 1.28 !important;
+}
+
+/* imagen alineada mejor con el bloque de texto */
+.adv-coach-visual {
+  padding-top: 78px !important;
+  align-items: center !important;
+}
+
+/* imagen un poco más contenida */
+.adv-coach-card {
+  width: min(100%, 530px) !important;
+}
+
+/* nombre debajo */
+.adv-coach-name {
+  margin-top: 34px !important;
+}
+/* =========================
+   FLECHAS PIXEL COACH
+========================= */
+
+.adv-coach-arrow {
+  position: absolute !important;
+  top: 50% !important;
+  width: 64px !important;
+  height: 64px !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  cursor: pointer !important;
+  z-index: 10 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease,
+    filter 0.25s ease !important;
+}
+
+.adv-coach-arrow img {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  object-fit: contain !important;
+}
+
+/* derecha */
+.adv-coach-next {
+  right: -82px !important;
+  transform: translateY(-50%) !important;
+}
+
+/* izquierda */
+.adv-coach-prev {
+  left: -82px !important;
+  transform: translateY(-50%) rotate(180deg) !important;
+}
+
+/* hover */
+.adv-coach-next:hover {
+  transform: translateY(-50%) scale(1.08) !important;
+  filter: drop-shadow(0 0 12px rgba(80, 166, 164, 0.8)) !important;
+}
+
+.adv-coach-prev:hover {
+  transform: translateY(-50%) rotate(180deg) scale(1.08) !important;
+  filter: drop-shadow(0 0 12px rgba(80, 166, 164, 0.8)) !important;
+}
+
+/* elimina flechas/textos viejos */
+.adv-coach-arrow::before,
+.adv-coach-arrow::after {
+  display: none !important;
+  content: none !important;
+}
+/* =========================
+   SECCIÓN 04 - COACH
+========================= */
+
+.adv-coach-section {
+  padding: 110px 88px 120px;
+  background: #000;
+  overflow: visible;
+}
+
+.adv-coach-top {
+  margin-bottom: 42px;
+}
+
+.adv-section-tag {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.adv-section-tag span {
+  width: 12px;
+  height: 12px;
+  background: #4ea7a8;
+  display: inline-block;
+}
+
+.adv-section-tag p {
+  margin: 0;
+  font-family: "Victor Mono", monospace;
+  font-size: 14px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #4ea7a8;
+}
+
+.adv-coach-top h2 {
+  margin: 0;
+  font-family: "Victor Mono", monospace;
+  font-size: clamp(44px, 4vw, 64px);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  color: #f5f5f5;
+  text-transform: uppercase;
+}
+
+.adv-coach-layout {
+  display: grid;
+  grid-template-columns: minmax(420px, 1fr) 540px;
+  gap: 88px;
+  align-items: start;
+}
+
+.adv-coach-copy {
+  max-width: 690px;
+}
+
+.adv-coach-copy p {
+  margin: 0 0 28px;
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.adv-coach-quote {
+  max-width: 520px;
+  font-family: "Victor Mono", monospace !important;
+  font-size: 29px !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.01em;
+  color: #f3f3f3 !important;
+  margin-bottom: 46px !important;
+}
+
+.adv-coach-highlight {
+  color: #fbfbfb !important;
+  font-weight: 500;
+}
+
+.adv-coach-media {
+  position: relative;
+  align-self: start;
+  margin-top: -18px; /* sube la imagen */
+  width: 100%;
+  max-width: 540px;
+}
+
+.adv-coach-card {
+  width: 100%;
+  background: #070707;
+  overflow: hidden;
+}
+
+.adv-coach-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.adv-coach-name {
+  margin: 18px 0 0;
+  text-align: center;
+  font-family: "Victor Mono", monospace;
+  font-size: 16px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.adv-coach-next {
+  position: absolute;
+  right: -92px;
+  top: 50%;
+  transform: translateY(-58%);
+  width: 64px;
+  height: 64px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.22s ease, filter 0.22s ease, opacity 0.22s ease;
+}
+
+.adv-coach-next img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.adv-coach-next:hover {
+  transform: translateY(-58%) scale(1.08);
+  filter: drop-shadow(0 0 12px rgba(78, 167, 168, 0.85));
+}
+
+/* por si quedó la flecha vieja */
+.adv-coach-prev {
+  display: none !important;
+}
+/* =========================
+   AJUSTE COACH: IMAGEN, FLECHA Y FRASE
+========================= */
+
+/* frase más chica y con línea más controlada */
+.adv-coach-quote {
+  max-width: 500px !important;
+  font-size: clamp(20px, 1.45vw, 30px) !important;
+  line-height: 1.16 !important;
+  margin-bottom: 44px !important;
+}
+
+/* bloque de imagen más arriba */
+.adv-coach-media {
+  margin-top: -46px !important;
+}
+
+/* contenedor fijo: evita que las imágenes salten de lugar */
+.adv-coach-card {
+  width: 100% !important;
+  max-width: 540px !important;
+  aspect-ratio: 4 / 5 !important;
+  overflow: hidden !important;
+  background: #000 !important;
+  position: relative !important;
+}
+
+/* todas las fotos ocupan exactamente el mismo espacio */
+.adv-coach-photo {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  transition: opacity 0.45s ease, transform 0.45s ease !important;
+}
+
+/* transición más suave al cambiar */
+.adv-coach-photo.is-changing {
+  opacity: 0 !important;
+  transform: scale(1.025) !important;
+}
+
+/* nombre visible debajo */
+.adv-coach-name {
+  margin-top: 18px !important;
+  font-size: 15px !important;
+  letter-spacing: 0.28em !important;
+}
+
+/* flecha más chica */
+.adv-coach-next {
+  width: 42px !important;
+  height: 42px !important;
+  right: -62px !important;
+  top: 48% !important;
+}
+
+/* que no exista la flecha izquierda */
+.adv-coach-prev {
+  display: none !important;
+}
+
+.adv-coach-next img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+
+/* hover más sutil */
+.adv-coach-next:hover {
+  transform: translateY(-58%) scale(1.06) !important;
+  filter: drop-shadow(0 0 9px rgba(80, 166, 164, 0.75)) !important;
+}
+/* =========================
+   AJUSTE COACH - ALINEAR IMAGEN CON TEXTO
+========================= */
+
+/* mantiene la sección con aire, pero sin empujar tanto la imagen */
+.adv-coach-section {
+  padding-top: 92px !important;
+  padding-bottom: 150px !important;
+}
+
+/* título y texto a la izquierda */
+.adv-coach-top {
+  margin-bottom: 34px !important;
+}
+
+/* grilla más equilibrada */
+.adv-coach-layout {
+  display: grid !important;
+  grid-template-columns: minmax(420px, 0.95fr) minmax(430px, 500px) !important;
+  gap: clamp(70px, 7vw, 120px) !important;
+  align-items: start !important;
+}
+
+/* columna de texto más controlada */
+.adv-coach-copy {
+  max-width: 650px !important;
+}
+
+/* frase un poco más chica */
+.adv-coach-quote {
+  max-width: 500px !important;
+  font-size: clamp(20px, 1.38vw, 28px) !important;
+  line-height: 1.15 !important;
+  margin-bottom: 44px !important;
+}
+
+/* imagen más arriba y apenas más chica */
+.adv-coach-media {
+  margin-top: -112px !important;
+  max-width: 500px !important;
+  align-self: start !important;
+}
+
+/* contenedor de imagen más chico */
+.adv-coach-card {
+  width: 100% !important;
+  max-width: 500px !important;
+  aspect-ratio: 4 / 5 !important;
+  overflow: hidden !important;
+}
+
+/* imagen siempre misma caja */
+.adv-coach-photo {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+}
+
+/* nombre visible y más cerca de la foto */
+.adv-coach-name {
+  margin-top: 16px !important;
+  font-size: 14px !important;
+  letter-spacing: 0.28em !important;
+}
+
+/* flecha acompañando la nueva posición/tamaño */
+.adv-coach-next {
+  width: 38px !important;
+  height: 38px !important;
+  right: -90px !important;
+  top: 48% !important;
+}
+/* =========================
+   AJUSTE FINAL COACH: FRASE + NOMBRE
+========================= */
+
+/* frase en Inter Light */
+.adv-coach-quote {
+  font-family: var(--font-text) !important;
+  font-weight: 300 !important;
+  max-width: 500px !important;
+  font-size: clamp(20px, 1.35vw, 28px) !important;
+  line-height: 1.16 !important;
+  letter-spacing: 0.01em !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+}
+
+/* el contenedor de la foto permite ubicar el nombre adentro */
+.adv-coach-media {
+  position: relative !important;
+}
+
+/* nombre como firma pequeña sobre la imagen */
+.adv-coach-name {
+  position: absolute !important;
+  left: 50% !important;
+  bottom: 22px !important;
+  z-index: 5 !important;
+
+  margin: 0 !important;
+  padding: 6px 10px !important;
+
+  font-family: var(--font-title) !important;
+  font-size: 11px !important;
+  line-height: 1 !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase !important;
+
+  color: #ffffff !important;
+  background: rgba(0, 0, 0, 0.62) !important;
+  backdrop-filter: blur(4px) !important;
+}
+/* achicar un poco más la imagen del coach */
+.adv-coach-media {
+  width: 100% !important;
+  max-width: 420px !important;
+}
+
+.adv-coach-media img {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  display: block !important;
+}
+
+/* =========================
+   05 TESTIMONIOS - TÍTULO FIJO + MARQUEE
+========================= */
+
+.adv-reviews-section {
+  position: relative;
+  background: #000;
+  color: #fff;
+  padding: 115px 0 130px;
+  overflow: hidden;
+}
+
+/* título quieto arriba */
+.adv-reviews-header {
+  padding: 0 var(--side-padding);
+  max-width: 1440px;
+  margin: 0 auto 72px;
+}
+
+.adv-reviews-tag {
+  margin-bottom: 34px !important;
+}
+
+.adv-reviews-header h2 {
+  margin: 0;
+  max-width: 760px;
+
+  font-family: var(--font-title);
+  font-size: clamp(48px, 5vw, 60px);
+  line-height: 0.92;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #fff;
+}
+
+/* tira horizontal */
+.adv-reviews-marquee {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 8px 0 18px;
+}
+
+.adv-reviews-marquee::before,
+.adv-reviews-marquee::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 170px;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.adv-reviews-marquee::before {
+  left: 0;
+  background: linear-gradient(90deg, #000 0%, transparent 100%);
+}
+
+.adv-reviews-marquee::after {
+  right: 0;
+  background: linear-gradient(270deg, #000 0%, transparent 100%);
+}
+
+.adv-reviews-track {
+  display: flex;
+  gap: 34px;
+  width: max-content;
+  padding-left: var(--side-padding);
+  animation: advReviewsMove 36s linear infinite;
+}
+
+.adv-reviews-marquee:hover .adv-reviews-track {
+  animation-play-state: paused;
+}
+
+@keyframes advReviewsMove {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* card editorial */
+.adv-review-card {
+  position: relative;
+  flex: 0 0 440px;
+  min-height: 430px;
+  padding: 34px 34px 32px;
+
+  background: #1d1d1b;
+  border-left: 1px solid rgba(80, 166, 164, 0.35);
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.28s ease,
+    background 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+/* borde animado hover */
+.adv-review-card::before,
+.adv-review-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: transform 0.38s ease;
+}
+
+.adv-review-card::before {
+  border-top: 1px solid var(--neon);
+  border-bottom: 1px solid var(--neon);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.adv-review-card::after {
+  border-left: 1px solid var(--neon);
+  border-right: 1px solid var(--neon);
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+.adv-review-card:hover {
+  transform: translateY(-8px);
+  background: #21211f;
+  box-shadow: 0 0 28px rgba(228, 255, 20, 0.11);
+}
+
+.adv-review-card:hover::before {
+  transform: scaleX(1);
+}
+
+.adv-review-card:hover::after {
+  transform: scaleY(1);
+}
+
+/* contenido */
+.adv-review-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 64px;
+}
+
+.adv-review-top span {
+  font-family: var(--font-text);
+  font-weight: 300;
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: -0.08em;
+  color: var(--neon);
+}
+
+.adv-review-top p {
+  margin: 0;
+  padding: 7px 12px;
+
+  font-family: var(--font-title);
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+
+  color: #50a6a4;
+  border: 1px solid rgba(80, 166, 164, 0.5);
+}
+
+.adv-review-card h3 {
+  margin: 0 0 10px;
+
+  font-family: var(--font-title);
+  font-size: 32px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-weight: 500;
+
+  color: #fff;
+}
+
+.adv-review-role {
+  margin: 0 0 42px;
+
+  font-family: var(--font-title);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  line-height: 1.25;
+  text-transform: uppercase;
+
+  color: rgba(255, 255, 255, 0.52);
+}
+
+.adv-review-text {
+  margin: 0;
+
+  font-family: var(--font-text);
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 1.18;
+
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.adv-review-card strong {
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid rgba(228, 255, 20, 0.26);
+
+  font-family: var(--font-title);
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  color: var(--neon);
+}
+
+/* responsive */
+@media (max-width: 900px) {
+  .adv-reviews-section {
+    padding: 82px 0 100px;
+  }
+
+  .adv-reviews-header {
+    padding: 0 28px;
+    margin-bottom: 56px;
+  }
+
+  .adv-reviews-header h2 {
+    font-size: 46px;
+  }
+
+  .adv-reviews-track {
+    padding-left: 28px;
+    animation-duration: 44s;
+  }
+
+  .adv-review-card {
+    flex-basis: 340px;
+    min-height: 380px;
+  }
+
+  .adv-review-text {
+    font-size: 18px;
+  }
+}
+/* =========================
+   AJUSTE TESTIMONIOS - TODO EN UNA PANTALLA
+========================= */
+
+.adv-reviews-section {
+  min-height: 100vh !important;
+  padding: 78px 0 88px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+/* título más compacto */
+.adv-reviews-header {
+  margin-bottom: 46px !important;
+}
+
+.adv-reviews-tag {
+  margin-bottom: 24px !important;
+}
+
+.adv-reviews-header h2 {
+  max-width: 620px !important;
+  font-size: clamp(38px, 3.8vw, 68px) !important;
+  line-height: 0.94 !important;
+}
+
+/* tira más compacta */
+.adv-reviews-marquee {
+  padding: 4px 0 12px !important;
+}
+
+.adv-reviews-track {
+  gap: 24px !important;
+  animation-duration: 34s !important;
+}
+
+/* cards más chicas */
+.adv-review-card {
+  flex: 0 0 340px !important;
+  min-height: 300px !important;
+  padding: 24px 24px 22px !important;
+}
+
+/* interior de card más compacto */
+.adv-review-top {
+  margin-bottom: 34px !important;
+}
+
+.adv-review-top span {
+  font-size: 36px !important;
+}
+
+.adv-review-top p {
+  font-size: 9px !important;
+  padding: 6px 9px !important;
+}
+
+.adv-review-card h3 {
+  font-size: 25px !important;
+  margin-bottom: 7px !important;
+}
+
+.adv-review-role {
+  font-size: 10px !important;
+  margin-bottom: 28px !important;
+}
+
+.adv-review-text {
+  font-size: 17px !important;
+  line-height: 1.18 !important;
+}
+
+.adv-review-card strong {
+  padding-top: 18px !important;
+  font-size: 11px !important;
+}
+
+/* sombras laterales más chicas para que no tapen tanto */
+.adv-reviews-marquee::before,
+.adv-reviews-marquee::after {
+  width: 100px !important;
+}
+/* =========================
+   FIX TESTIMONIOS - ALINEADO IZQUIERDA + LOOP
+========================= */
+
+.adv-reviews-section {
+  min-height: 100vh !important;
+  padding: 92px 0 90px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+}
+
+/* header alineado a la izquierda */
+.adv-reviews-header {
+  width: 100% !important;
+  max-width: 1440px !important;
+  margin: 0 auto 48px !important;
+  padding: 0 var(--side-padding) !important;
+  text-align: left !important;
+  align-self: stretch !important;
+}
+
+.adv-reviews-tag {
+  justify-content: flex-start !important;
+  margin-bottom: 26px !important;
+}
+
+.adv-reviews-header h2 {
+  text-align: left !important;
+  margin: 0 !important;
+  max-width: 760px !important;
+
+  font-size: clamp(42px, 4vw, 60px) !important;
+  line-height: 0.92 !important;
+}
+
+/* las cards aparecen dentro de la pantalla */
+.adv-reviews-marquee {
+  margin-top: 0 !important;
+  padding: 4px 0 12px !important;
+}
+
+.adv-reviews-track {
+  gap: 24px !important;
+  padding-left: var(--side-padding) !important;
+  animation: advReviewsMove 32s linear infinite !important;
+}
+
+/* cards un poco chicas */
+.adv-review-card {
+  flex: 0 0 335px !important;
+  min-height: 295px !important;
+  padding: 24px 24px 22px !important;
+}
+
+.adv-review-top {
+  margin-bottom: 30px !important;
+}
+
+.adv-review-top span {
+  font-size: 34px !important;
+}
+
+.adv-review-top p {
+  font-size: 9px !important;
+  padding: 6px 9px !important;
+}
+
+.adv-review-card h3 {
+  font-size: 24px !important;
+  margin-bottom: 7px !important;
+}
+
+.adv-review-role {
+  font-size: 10px !important;
+  margin-bottom: 24px !important;
+}
+
+.adv-review-text {
+  font-size: 16px !important;
+  line-height: 1.18 !important;
+}
+
+.adv-review-card strong {
+  font-size: 11px !important;
+  padding-top: 16px !important;
+}
+
+/* loop continuo */
+@keyframes advReviewsMove {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* =========================
+   SISTEMA GENERAL DE TÍTULOS + TAGS
+========================= */
+
+:root {
+  --section-title-size: clamp(38px, 3vw, 56px);
+  --section-title-line: 0.95;
+  --section-title-spacing: -0.055em;
+
+  --section-tag-gap: 18px;
+  --section-tag-square: 10px;
+  --section-tag-offset: 28px;
+  --section-tag-title-gap: 44px;
+}
+
+/* TODOS LOS TÍTULOS DE SECCIÓN CON MISMO TAMAÑO */
+.advanced-learn-copy h2,
+.adv-program-free-header h2,
+.adv-coach-top h2,
+.adv-reviews-header h2 {
+  font-family: var(--font-title) !important;
+  font-size: var(--section-title-size) !important;
+  line-height: var(--section-title-line) !important;
+  letter-spacing: var(--section-title-spacing) !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  color: #fff !important;
+}
+
+/* MISMO ESPACIO ENTRE TAG Y TÍTULO */
+.advanced-section-tag,
+.adv-section-tag,
+.adv-program-free-tag,
+.adv-coach-tag,
+.adv-reviews-tag {
+  display: flex !important;
+  align-items: center !important;
+  gap: var(--section-tag-gap) !important;
+
+  margin-bottom: var(--section-tag-title-gap) !important;
+
+  /* esto hace que el cuadrado quede afuera
+     y el texto del tag quede alineado con el título */
+  transform: translateX(calc(-1 * var(--section-tag-offset))) !important;
+}
+
+/* CUADRADITO AFUERA DEL MARGEN */
+.advanced-section-tag span,
+.adv-section-tag span,
+.adv-program-free-tag span,
+.adv-coach-tag span,
+.adv-reviews-tag span {
+  width: var(--section-tag-square) !important;
+  height: var(--section-tag-square) !important;
+  flex: 0 0 var(--section-tag-square) !important;
+  display: block !important;
+  background: #50a6a4 !important;
+}
+
+/* TEXTO DEL TAG ALINEADO CON EL TÍTULO */
+.advanced-section-tag p,
+.adv-section-tag p,
+.adv-program-free-tag p,
+.adv-coach-tag p,
+.adv-reviews-tag p {
+  margin: 0 !important;
+  font-family: var(--font-title) !important;
+  font-size: 12px !important;
+  line-height: 1 !important;
+  letter-spacing: 0.26em !important;
+  text-transform: uppercase !important;
+  color: #50a6a4 !important;
+}
+
+/* ASEGURA QUE NO SE CORTE EL CUADRADITO */
+.advanced-learn-section,
+.adv-program-free-section,
+.adv-coach-section,
+.adv-reviews-section {
+  overflow: visible !important;
+}
+/* =========================
+   06 PREGUNTAS FRECUENTES
+========================= */
+
+.adv-faq-section {
+  position: relative;
+  background: #000;
+  color: #fff;
+  padding: 92px 0 0;
+  overflow: hidden;
+}
+
+.adv-faq-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--side-padding) 105px;
+}
+
+.adv-faq-tag {
+  margin-bottom: var(--section-tag-title-gap) !important;
+}
+
+.adv-faq-inner h2 {
+  margin: 0 0 88px;
+  font-family: var(--font-title);
+  font-size: var(--section-title-size);
+  line-height: var(--section-title-line);
+  letter-spacing: var(--section-title-spacing);
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+/* lista */
+.adv-faq-list {
+  width: 100%;
+}
+
+.adv-faq-item {
+  border-bottom: 1px solid rgba(228, 255, 20, 0.42);
+}
+
+.adv-faq-question {
+  width: 100%;
+  min-height: 112px;
+  padding: 0;
+  border: none;
+  background: transparent;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+
+  cursor: pointer;
+  text-align: left;
+}
+
+.adv-faq-question span {
+  font-family: var(--font-text);
+  font-weight: 300;
+  font-size: clamp(22px, 2vw, 38px);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* flecha pixel hecha con CSS */
+.adv-faq-question i {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  position: relative;
+  transform: rotate(45deg);
+  transition: transform 0.28s ease;
+}
+
+.adv-faq-question i::before,
+.adv-faq-question i::after {
+  content: "";
+  position: absolute;
+  background: #50a6a4;
+}
+
+.adv-faq-question i::before {
+  width: 100%;
+  height: 6px;
+  right: 0;
+  top: 14px;
+}
+
+.adv-faq-question i::after {
+  width: 6px;
+  height: 100%;
+  right: 14px;
+  top: 0;
+}
+
+.adv-faq-item.is-open .adv-faq-question i {
+  transform: rotate(225deg);
+}
+
+/* respuesta */
+.adv-faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.adv-faq-answer p {
+  max-width: 760px;
+  margin: 0;
+  padding: 0 0 34px;
+
+  font-family: var(--font-text);
+  font-size: clamp(16px, 1vw, 21px);
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+/* hover */
+.adv-faq-question:hover span {
+  color: #fff;
+}
+
+.adv-faq-question:hover i::before,
+.adv-faq-question:hover i::after {
+  background: var(--neon);
+  box-shadow: 0 0 12px rgba(228, 255, 20, 0.5);
+}
+
+/* imagen transición a fondo blanco */
+.adv-faq-transition {
+  width: 100%;
+  height: 158px;
+  overflow: hidden;
+  background: #000;
+  line-height: 0;
+}
+
+.adv-faq-transition img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+/* responsive */
+@media (max-width: 900px) {
+  .adv-faq-inner {
+    padding: 0 28px 80px;
+  }
+
+  .adv-faq-inner h2 {
+    margin-bottom: 54px;
+  }
+
+  .adv-faq-question {
+    min-height: 92px;
+  }
+
+  .adv-faq-question span {
+    font-size: 22px;
+  }
+
+  .adv-faq-question i {
+    width: 26px;
+    height: 26px;
+    flex-basis: 26px;
+  }
+
+  .adv-faq-question i::before {
+    height: 5px;
+    top: 11px;
+  }
+
+  .adv-faq-question i::after {
+    width: 5px;
+    right: 11px;
+  }
+
+  .adv-faq-transition {
+    height: 110px;
+  }
+}
+/* =========================
+   FAQ - FLECHA PIXEL REAL
+========================= */
+
+/* eliminamos la flecha hecha con CSS */
+.adv-faq-question i,
+.adv-faq-question i::before,
+.adv-faq-question i::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* flecha nueva */
+.adv-faq-arrow {
+  width: 28px !important;
+  height: 28px !important;
+  object-fit: contain !important;
+  display: block !important;
+  flex: 0 0 28px !important;
+
+  /* la imagen apunta a la derecha, la rotamos para que mire hacia abajo */
+  transform: rotate(90deg) !important;
+
+  transition:
+    transform 0.25s ease,
+    filter 0.25s ease,
+    opacity 0.25s ease !important;
+}
+
+/* al abrir, gira */
+.adv-faq-item.is-open .adv-faq-arrow {
+  transform: rotate(-90deg) !important;
+}
+
+/* hover */
+.adv-faq-question:hover .adv-faq-arrow {
+  filter: drop-shadow(0 0 8px rgba(80, 166, 164, 0.85)) !important;
+}
+
+/* si todavía se ve grande, achicar acá */
+@media (max-width: 900px) {
+  .adv-faq-arrow {
+    width: 22px !important;
+    height: 22px !important;
+    flex-basis: 22px !important;
+  }
+}
+/* =========================
+   FAQ - TEXTO MÁS CHICO
+========================= */
+
+.adv-faq-inner h2 {
+  font-size: clamp(36px, 3vw, 54px) !important;
+  margin-bottom: 70px !important;
+}
+
+.adv-faq-question {
+  min-height: 92px !important;
+}
+
+.adv-faq-question span {
+  font-size: clamp(18px, 1.45vw, 28px) !important;
+  line-height: 1.15 !important;
+  letter-spacing: 0.01em !important;
+}
+
+.adv-faq-answer p {
+  font-size: clamp(14px, 0.9vw, 18px) !important;
+  line-height: 1.35 !important;
+}
+
+/* =========================
+   CTA FINAL + FOOTER APEX
+========================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Victor+Mono:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --neon: #e4ff14;
+  --font-title: 'Victor Mono', monospace;
+  --font-text: 'Inter', sans-serif;
+  --side-padding: clamp(24px, 6vw, 96px);
+}
+
+/* CTA FINAL */
+
+.final-cta {
+  position: relative;
+  background: #f4f4f4;
+  color: #111;
+  min-height: 370px;
+  padding: 165px var(--side-padding) 95px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Imagen de transición superior */
+.final-cta::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 155px;
+  background-image: url("./img/fondo-footer.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: top center;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.final-cta-inner {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 980px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 95px;
+}
+
+.final-cta h2 {
+  margin: 0;
+  font-family: var(--font-title);
+  font-size: clamp(30px, 2.5vw, 46px);
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+  color: #171717;
+  font-weight: 500;
+  max-width: 470px;
+}
+
+.final-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 150px;
+  height: 44px;
+  padding: 0 24px;
+  border-radius: 5px;
+  background: var(--neon);
+  color: #000;
+  font-family: var(--font-text);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.final-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 24px rgba(228, 255, 20, 0.45);
+}
+
+/* FOOTER */
+
+.site-footer {
+  background: #0000;
+  color: #fff;
+  padding: 48px var(--side-padding) 42px;
+  font-family: var(--font-text);
+}
+
+.footer-inner {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) 1.35fr;
+  gap: clamp(60px, 11vw, 165px);
+  align-items: start;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 420px;
+}
+
+.footer-logo {
+  width: 104px;
+  margin-bottom: 28px;
+  display: inline-flex;
+}
+
+.footer-logo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: invert(1) brightness(4);
+}
+
+.footer-description {
+  margin: 0 0 22px;
+  max-width: 340px;
+  font-size: 13px;
+  line-height: 1.18;
+  color: #fff;
+}
+
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.footer-social a {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.25s ease, color 0.25s ease, filter 0.25s ease;
+}
+
+.footer-social svg {
+  width: 28px;
+  height: 28px;
+  fill: currentColor;
+  display: block;
+}
+
+.footer-social a:hover {
+  color: var(--neon);
+  transform: translateY(-3px);
+  filter: drop-shadow(0 0 12px rgba(228, 255, 20, 0.35));
+}
+
+.footer-legal-small {
+  margin: 0;
+  max-width: 390px;
+  font-size: 9px;
+  line-height: 1.2;
+  color: #d8d8d8;
+}
+
+.footer-nav {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(44px, 6vw, 95px);
+  padding-top: 0;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footer-col h3 {
+  margin: 0 0 22px;
+  font-family: var(--font-title);
+  font-size: clamp(20px, 1.45vw, 28px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  font-weight: 500;
+}
+
+.footer-col a {
+  margin-bottom: 17px;
+  font-size: clamp(12px, 0.85vw, 15px);
+  line-height: 1;
+  text-transform: uppercase;
+  color: #cfcfcf;
+  text-decoration: none;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.footer-col a:hover {
+  color: var(--neon);
+  transform: translateX(4px);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 800px) {
+  .final-cta {
+    min-height: 300px;
+    padding: 130px 22px 70px;
+  }
+
+  .final-cta::before {
+    height: 115px;
+  }
+
+  .final-cta-inner {
+    flex-direction: column;
+    gap: 24px;
+    text-align: center;
+  }
+
+  .final-cta h2 {
+    font-size: 32px;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+  .footer-nav {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
